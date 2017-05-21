@@ -1,0 +1,85 @@
+<div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>{{model.archivoid}} {{model.denominacion|capitalize}}<small></small></h5>
+                            <div class="ibox-tools oculto">
+                                <a class="collapse-link">
+                                    <i class="fa fa-chevron-up"></i>
+                                </a>
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                    <i class="fa fa-wrench"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-user">
+                                    <li><a href="#">Config option 1</a>
+                                    </li>
+                                    <li><a href="#">Config option 2</a>
+                                    </li>
+                                </ul>
+                                <a class="close-link">
+                                    <i class="fa fa-times"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+                            <form method="post" onsubmit="" class="form-horizontal">
+                                <div class="form-group">
+                                    <label class="col-lg-2 control-label">Identificador</label>
+
+                                    <div class="col-lg-10">
+                                        <input type="text" class="form-control" name="archivoid" [(ngModel)]="model.archivoid"> 
+                                    </div>
+                                </div>
+                                <div class="hr-line-dashed"></div>
+                                <div class="form-group"><label class="col-sm-2 control-label">Nombre del Documento</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" name="denominacion" [(ngModel)]="model.denominacion"> 
+                                    </div>
+                                </div>
+                                <div class="hr-line-dashed"></div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Proceso</label>
+                                    <div class="col-sm-10">
+                                        <select class="form-control m-b" name="gestionid" [(ngModel)]="model.gestionid" (change)="archivoid()" >
+                                            <option *ngFor="let gestion of gestiones" value="{{gestion.gestionid}}" > {{gestion.denominacion}} </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="hr-line-dashed" [ngClass]="{'oculto': model.gestionid===''}"></div>
+                                <div class="form-group" [ngClass]="{'oculto': model.gestionid===''}">
+                                    <label class="col-sm-2 control-label">Convención</label>
+                                    <div class="col-sm-10">
+                                        <select class="form-control m-b" name="convencionid" [(ngModel)]="model.convencionid" (change)="archivoid()">
+                                            <option *ngFor="let convencion of convenciones" value="{{convencion.convencionid}}" > {{convencion.denominacion}} </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="hr-line-dashed" [ngClass]="{'oculto': model.convencionid===''}"></div>
+                                <div class="form-group" [ngClass]="{'oculto': model.convencionid===''}">
+                                    <label class="col-sm-2 control-label">Documento vinculado</label>
+                                    <div class="col-sm-10">
+                                        <select class="form-control m-b" name="archivoidaux" [(ngModel)]="model.archivoidaux" (change)="archivoid()">
+                                            <option value="" selected> Éste documento no posee vinculación </option>
+                                            <option *ngFor="let model of models" value="{{model.archivoid}}" > ({{model.archivoid}}) {{model.denominacion}} </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="hr-line-dashed" [ngClass]="{'oculto': model.convencionid===''}"></div>
+                                <div class="form-group" [ngClass]="{'oculto': model.convencionid===''}">
+                                    <label class="col-sm-2 control-label">Documento</label>
+                                    <div class="col-sm-10">
+                                        <input type="file" placeholder="Seleccione el documento" class="form-control" (change)="fileChangeEvent($event)" accept="application/pdf,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel,application/msword" >
+                                    </div>
+                                </div>
+                               
+                                <div class="form-group">
+                                    <div class="col-sm-4 col-sm-offset-2">
+                                        <button class="btn btn-white" (click)="_helper.goBack()">Cancelar</button>
+                                        <button class="btn btn-primary" (click)='onSubmitHandler()' type="submit">Guardar documento</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>

@@ -1,0 +1,108 @@
+<div class="row animated fadeInRight">
+    <div class="col-lg-4">
+        <div class="ibox float-e-margins">
+            
+        <div class="ibox-content">
+
+            <div id="jstree1">
+                <ul>
+                    <li class="" *ngFor="let m1 of menues|applyFilter:'submenuid':''">
+                        <i class="fa {{m1.iconfa}}" *ngIf="m1.iconfa!=null&&m1.iconfa!=''"></i> 
+                        <a (click)="editar(m1.menuid)" [ngClass]="{'text-danger':!m1.activo}" >
+                        {{m1.label}}
+                        </a>
+                        <ul *ngIf="m1.hijos">
+                            <li *ngFor="let m3 of menues|applyFilter:'submenuid':m1.menuid|applyFilter:'hijos':true">
+                                <a (click)="editar(m3.menuid)" [ngClass]="{'text-danger':!m3.activo}">
+                                {{m3.label}}
+                                </a> 
+                                <ul *ngIf="m3.hijos" >
+                                    <li *ngFor="let m4 of menues|applyFilter:'submenuid':m3.menuid">
+                                    <a (click)="editar(m4.menuid)" [ngClass]="{'text-danger':!m4.activo}" >
+                                        {{m4.label}}
+                                    </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li *ngFor="let m2 of menues|applyFilter:'submenuid':m1.menuid|applyFilter:'hijos':false">
+                            <a (click)="editar(m2.menuid)" [ngClass]="{'text-danger':!m2.activo}" >
+                                {{m2.label}}
+                            </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+        </div>
+    </div>
+    <div class="col-lg-8">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>{{title}}</h5>
+                <div class="ibox-tools">
+                    <button class="btn btn-primary btn-xs" (click)="setAccion()" *ngIf="!nuevo" >Nuevo Menú</button>
+                    <button class="btn btn-danger btn-xs" (click)="eliminar()" *ngIf="!nuevo" >Eliminar</button>
+                </div>
+            </div>
+            <div class="ibox-content">
+                <form role="form" (submit)='onSubmit()' class="form-inline">
+                    <div class="form-group">
+                        <input class="form-control input-sm" placeholder="Identificador" type="text" required [(ngModel)]="model.menuid" ngControl="menuid" ngControl="menuid" name="menuid"> 
+                    </div>
+                    <div class="form-group">
+                        <input required placeholder="Texto a mostrar" class="form-control input-sm" type="text" [(ngModel)]="model.label" ngControl="label" ngControl="label" name="label"> 
+                    </div>
+                    <div class="form-group">
+                        <input placeholder="Icono si es Superior" class="form-control input-sm" type="text" [(ngModel)]="model.iconfa" ngControl="iconfa" ngControl="iconfa" name="iconfa"> 
+                    </div>
+                    <div class="checkbox m-r-xs">
+                        <input id="activo" type="checkbox" [(ngModel)]="model.activo" ngControl="activo" ngControl="activo" name="activo"> 
+                        <label for="activo">
+                            Activo
+                        </label>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                    <label for="submenuid">Menú Padre</label><br>
+                    <select class="form-control m-b input-sm" [(ngModel)]="model.submenuid" ngControl="submenuid" ngControl="submenuid" name="submenuid"> 
+                        <option value="">Es Principal</option>
+                        <option *ngFor="let m of menues" value="{{m.menuid}}">{{m.label}}</option>
+                    </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="orden">Orden</label><br/>
+                        <input placeholder="Orden" type="text" [(ngModel)]="model.orden" ngControl="orden" ngControl="orden" name="orden" id="orden" class="form-control input-sm" value=""> 
+                    </div>
+                    <div class="form-group">
+                    <label for="ruta">Enlace</label><br>
+                    <select class="form-control m-b input-sm" [(ngModel)]="model.ruta" ngControl="ruta" ngControl="ruta" name="ruta"> 
+                        <option value="">Sin Enlace</option>
+                        <option *ngFor="let r of rutas" value="{{r.rutaid}}">({{r.rutaid}}) {{r.descripcion}}</option>
+                    </select>
+                    </div>
+                    <div class="form-group">
+                    <label for="ruta">Tilde</label><br>
+                    <select class="form-control m-b input-sm" [(ngModel)]="model.tiporesalte" ngControl="tiporesalte" ngControl="tiporesalte" name="tiporesalte"> 
+                        <option value="">Gris</option>
+                        <option value="warning">Amarillo</option>
+                        <option value="info">Celeste</option>
+                        <option value="danger">Rojo</option>
+                        <option value="primary">Verde</option>
+                    </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="resalte">Texto Tilde</label><br/>
+                        <input placeholder="10 Caracteres Máx." type="text" [(ngModel)]="model.resalte" ngControl="resalte" ngControl="resalte" name="resalte" id="resalte" class="form-control input-sm" value=""> 
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                    <button class="btn btn-primary" type="submit" *ngIf="nuevo" >Registrar Nuevo Menú</button>
+                    <button class="btn btn-success" type="submit" *ngIf="!nuevo" >Actualizar Datos de Menú</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

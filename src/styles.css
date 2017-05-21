@@ -1,1 +1,32 @@
 /* You can add global styles to this file, and also import other style files */
+@import url("assets/css/bootstrap.min.css");
+@import url("assets/font-awesome/css/font-awesome.css");
+
+/*<!-- Toastr style -->*/
+@import url("assets/css/plugins/toastr/toastr.min.css");
+
+/*<!-- Gritter -->*/
+@import url("assets/js/plugins/gritter/jquery.gritter.css");
+
+@import url("assets/css/animate.css");
+@import url("assets/css/style.css");
+
+@import url("assets/css/plugins/ladda/ladda-themeless.min.css");
+
+@import url('assets/css/plugins/iCheck/custom.css');
+
+/*Sweet Alert*/
+@import url('assets/css/plugins/sweetalert/sweetalert.css');
+
+/*Data Picker*/
+@import 'assets/css/plugins/datapicker/datepicker3.css';
+
+/*TouchSpin*/
+@import url('assets/css/plugins/touchspin/jquery.bootstrap-touchspin.min.css');
+
+/*Wizards*/
+@import url('assets/css/plugins/steps/jquery.steps.css');
+
+.oculto{
+    display: none;
+}

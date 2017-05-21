@@ -1,0 +1,55 @@
+<div class="loginColumns animated fadeInDown"  >        
+        <div class="row">
+            <div class="col-md-6">
+                <h2 class="font-bold">{{title}}</h2>
+
+                <p>
+                    La confianza no se da. Se gana.
+                </p>
+
+                <p>
+                    Desarrollamos tus aplicaciones con una misi&oacute;n: T&uacute; eres lo primero. 
+                </p>
+
+                <p>
+                    Lo hacemos para que t&uacute; tengas el control. 
+                </p>
+
+                <p>
+                    <small>Lo hacemos porque nos gusta. Y lo hacemos porque nadie m&aacute;s lo va hacer.</small>
+                </p>
+
+            </div>
+            <div class="col-md-6">
+                <div class="ibox-content" >
+                    <form class="m-t" role="form" #formLogin="ngForm" (ngSubmit)="onSubmit()" id="formLogin">
+                        <div class="form-group">
+                            <input type="text" name="usuario" required [(ngModel)]="model.usuario" class="form-control" ngControl="usuario" placeholder="Usuario" />
+                        </div>
+                        <div class="form-group">
+                            <input type="password" name="clave" required [(ngModel)]="model.clave" class="form-control" ngControl="clave" placeholder="Contrase&ntilde;a" />
+                        </div>
+                        <div *ngIf="loading" class="sk-spinner sk-spinner-rotating-plane"></div>
+                        <button  *ngIf="!loading"  class="btn btn-primary block full-width m-b">Iniciar Ses&oacute;n</button>
+                        <!-- <button ng-disabled="model.usuario==='' && model.clave===''" type="submit" class="ladda-button ladda-button-demo btn btn-primary full-width m-b"  data-style="zoom-in">Iniciar Ses&oacute;n</button>
+ -->
+                        
+                        <a href="#" *ngIf="false" >
+                            <small>No recuerdo mi contrase&ntilde;a</small>
+                        </a>
+                        
+                        <p class="text-muted text-center">
+                            <small>No estoy registrado</small>
+                        </p>
+                        <a [routerLink]="['/registro']" class="btn btn-sm btn-white btn-block" >Crearme una cuenta</a>
+                        
+                    </form>
+                    <p class="m-t" *ngIf="false" >
+                        <small>Inspinia we app framework base on Bootstrap 3 &copy; 2014</small>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <hr/>
+        
+    </div>

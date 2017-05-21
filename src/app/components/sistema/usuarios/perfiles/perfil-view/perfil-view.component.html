@@ -1,0 +1,170 @@
+<div class="row ">
+            <div class="col-lg-12 animated fadeInRight">
+                <div class="wrapper wrapper-content">
+                    <div class="ibox">
+                        <div class="ibox-content">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="m-b-md">
+                                        <a (click)="eliminarPerfil()"  class="btn btn-outline btn-danger btn-xs pull-right">Eliminar Perfil</a>
+                                        <a [routerLink]="['/perfiledit',perfil.perfilid]" class="btn btn-outline btn-primary btn-xs pull-right">
+                                          Editar Perfil
+                                        </a>
+                                        <h2>{{perfil.denominacion}}</h2>
+                                    </div>
+                                    <dl class="dl-horizontal">
+                                        <dt>Status:</dt> 
+                                        <dd>
+                                          <span class="label label-primary" [ngClass]="{'oculto':perfil.activo==false}" >Activo</span>
+                                          <span class="label label-default" [ngClass]="{'oculto':perfil.activo==true}" >Inactivo</span>
+                                        </dd>
+                                    </dl>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-5">
+                                    <dl class="dl-horizontal">
+                                        <dt>Identificador:</dt> <dd>{{perfil.perfilid}}</dd>
+                                    </dl>
+                                </div>
+                                <div class="col-lg-7" id="cluster_info">
+                                    <dl class="dl-horizontal" >
+
+                                        <dt>Creado:</dt> <dd> 	{{perfil.fechacreado|fecha}} </dd>
+                                        <dt>Usuarios:</dt>
+                                        <dd class="project-people">
+                                        <a href="" *ngFor="let usuario of usuarios" ><img alt="{{usuario.nombres}}" class="img-circle"  src="{{usuario.avatar}}"></a>
+                                        </dd>
+                                    </dl>
+                                </div>
+                            </div>
+                            <div class="row oculto">
+                                <div class="col-lg-12">
+                                    <dl class="dl-horizontal">
+                                        <dt>Completed:</dt>
+                                        <dd>
+                                            <div class="progress progress-striped active m-b-sm">
+                                                <div style="width: 60%;" class="progress-bar"></div>
+                                            </div>
+                                            <small>Project completed in <strong>60%</strong>. Remaining close the project, sign a contract and invoice.</small>
+                                        </dd>
+                                    </dl>
+                                </div>
+                            </div>
+                            <div class="row m-t-sm">
+                                <div class="col-lg-12">
+                                <div class="panel blank-panel">
+                                <div class="panel-heading">
+                                    <div class="panel-options">
+                                        <ul class="nav nav-tabs">
+                                            <li class="active" id="headertabUsuarios"><a (click)="clickEventHandlerTab('#tabUsuarios')"   target="_tabUsuarios" data-toggle="tab">Usuarios Miembros</a></li>
+                                            <li class="" id="headertabPermisos"><a (click)="clickEventHandlerTab('#tabPermisos')" target="_tabPermisos" data-toggle="tab">Permisos</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="panel-body">
+
+                                <div class="tab-content">
+                                <div class="tab-pane active" id="tabUsuarios">
+                                    
+                                    <div class="feed-activity-list">
+                                        <div class="feed-element"  >
+                                            <div class="media-body ">
+                                                <div class="row">
+                                                    <div class="col-sm-1 control-label">
+                                                        Agregar usuarios:
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                    
+                                                        <select [(ngModel)]="usuarioAgregar" class="form-control m-b" name="usuario" id="usuarioPerfil">
+                                                        <!--<select class="form-control m-b" name="usuario">-->
+                                                            <option *ngFor="let usuario of usuariosFiltrados"  value="{{usuario.usuario}}">{{usuario.nombres}} {{usuario.apellidos}}</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <button type="button" class="btn btn-outline btn-primary" (click)='asignarPerfil()' >Agregar usuario</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="feed-activity-list">
+                                        <div class="feed-element" *ngFor="let usuario of usuarios" >
+                                            <a [routerLink]="['/usuarioedit',usuario.usuario]" class="pull-left">
+                                                <img alt="image" class="img-circle" style="width: 32px;" src="{{usuario.avatar}}">
+                                            </a>
+                                            <div class="media-body ">
+                                                <strong>{{usuario.nombres}} {{usuario.apellidos}}</strong> ingresa al sistema con <strong>{{usuario.usuario}}</strong>. <br>
+                                                <small class="text-muted">Registrado desde {{usuario.fecharegistro|fecha}}</small><br>
+                                                <button class="btn btn-outline btn-danger btn-xs" (click)='desvincularPerfil(usuario.usuario)'>Desvincular a {{usuario.nombres}}</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="tab-pane" id="tabPermisos">
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label">Agregar permisos:</label>
+                                        <div class="col-sm-4">
+                                            <select class="form-control m-b" [(ngModel)]="rutaElegida" ngControl="rutaElegida" ngControl="rutaElegida" name="rutaElegida"> 
+                                                <option *ngFor="let ruta of rutasFueraDelPerfil" value="{{ruta.rutaid}}" >{{ruta.descripcion}}</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <button (click)='agregarPermisoARuta()' class="btn btn-info btn-circle" type="button"><i class="fa fa-check"></i></button>
+                                        </div>
+                                    </div>
+                                    
+                                    <table class="table table-striped">
+                                        <caption>Permisos que posee el perfil</caption>
+                                        <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>Identificador</th>
+                                            <th>Ruta</th>
+                                            <th>Descripci&oacute;n</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr *ngFor="let ruta of rutasEnPerfil" >
+                                            <td>
+                                                <a (click)='quitarPermisoARuta(ruta.rutaid)' class="btn btn-danger btn-bitbucket">
+                                                    <i class="fa fa-trash"></i>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                {{ruta.rutaid}}
+                                            </td>
+                                            <td>
+                                                {{ruta.ruta}}
+                                            </td>
+                                            
+                                            <td>
+                                                <p class="small">
+                                                    {{ruta.descripcion}}
+                                                </p>
+                                            </td>
+
+                                        </tr>
+                                        
+                                       
+ 
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                                </div>
+
+                                </div>
+
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>

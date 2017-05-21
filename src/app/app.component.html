@@ -1,3 +1,20 @@
-<h1>
-  {{title}}
-</h1>
+    <div id="wrapper">
+        <!--navbar-default-->
+        <app-navbar-default [usuario]="currentUser" [ngClass]="{'oculto':currentUser.usuario==''}"></app-navbar-default>
+        <!--end navbar-default-->
+        
+        <div id="page-wrapper" class="gray-bg dashbard-1">
+            <app-navbar-top [ngClass]="{'oculto':currentUser.usuario==''}"></app-navbar-top>
+            <!--dashboard-header-->
+            <app-dashboard-header [navLinks]="links" [ngClass]="{'oculto':currentUser.usuario==''}"></app-dashboard-header>
+            <!--end dashboard-header-->
+            <div class="wrapper wrapper-content">
+                <router-outlet></router-outlet>
+            </div>
+            <app-footer></app-footer>
+          
+        </div>
+        <app-small-chat [ngClass]="{'oculto':currentUser.usuario==''}"></app-small-chat>
+        <app-navbar-right [ngClass]="{'oculto':currentUser.usuario==''}"></app-navbar-right>
+    </div>
+

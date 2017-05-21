@@ -1,0 +1,3 @@
+input[name="denominacion"]{
+    text-transform: capitalize;
+}

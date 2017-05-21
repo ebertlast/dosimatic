@@ -1,0 +1,11 @@
+<div class="row border-bottom white-bg dashboard-header">
+    <h2>{{title}}</h2>
+    <ol class="breadcrumb">
+    <li *ngFor="let link of navLinks " [ngClass]="{'active':link.active}" >
+        <a *ngIf="!link.active"  [routerLink]="[link.url]">
+            {{link.title}}
+        </a>  
+        <strong *ngIf="link.active">{{link.title}}</strong>                      
+    </li>                    
+    </ol> 
+</div>

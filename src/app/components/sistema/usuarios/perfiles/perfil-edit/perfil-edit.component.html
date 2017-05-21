@@ -1,0 +1,52 @@
+<div class="col-lg-12 animated fadeInRight">
+    <div class="ibox float-e-margins">
+        <div class="ibox-title oculto">
+           
+        </div>
+        <div class="ibox-content" style="display: block;">
+          <form class="form-horizontal" id="formPerfil" (ngSubmit)="onSubmit()" #formPerfil="ngForm">
+                
+                <div class="form-group">
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-md-2">
+                              <input placeholder="Identificador" class="form-control" type="text" required [(ngModel)]="perfil.perfilid" ngControl="perfilid" ngControl="perfilid" name="perfilid"> 
+                            </div>
+                            <div class="col-md-4">
+                              <input type="text" required [(ngModel)]="perfil.denominacion" ngControl="denominacion" ngControl="denominacion" name="denominacion" placeholder="Denominación" class="form-control" > 
+                            </div>
+                            <div class="col-md-3">
+                              <div class="col-sm-10">
+                                  <div id="i-checks-activo" class="i-checks">
+                                    <label> 
+                                      <input type="radio" id="activo" name="activo" [(ngModel)]="perfil.activo" ngControl="activo" ngControl="activo" [value]="1"> 
+                                      <i></i> Activo 
+                                    </label>
+                                  </div>
+                                  <div id="i-checks-inactivo" class="i-checks">
+                                    <label> 
+                                      <input type="radio" id="inactivo" name="activo" [(ngModel)]="perfil.activo" ngControl="activo" ngControl="activo" [value]="0"> 
+                                      
+                                      <i></i> Inactivo 
+                                    </label>
+                                  </div>
+                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                
+              
+                <div class="hr-line-dashed"></div>
+                <div class="form-group">
+                    <div class="col-sm-4 col-sm-offset-2">
+                        <a class="btn btn-white" [routerLink]="['/perfil',perfil.perfilid]">Volver</a>
+                        
+                        <button class="btn btn-primary" type="submit">Guardar Cambios</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
