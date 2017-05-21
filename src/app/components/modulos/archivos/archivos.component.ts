@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Archivo } from 'app/models/archivo'
+import { Navlink } from 'app/models/navlink'
 import { ArchivoService as ModelService} from 'app/services/modulos/archivos/archivo.service';
 declare var $:any;
 @Component({
@@ -16,6 +17,12 @@ export class ArchivosComponent implements OnInit {
         checkboxClass: 'icheckbox_square-green',
         radioClass: 'iradio_square-green',
     });
+
+    let links:Navlink[]=[
+      {url:"",title:"Gestión Documental",active:true},
+      {url:"/archivos",title:"Documentos",active:true},
+      ];
+    this._appComponent.setLinks(links);
   }
 
   refreshModels(){
