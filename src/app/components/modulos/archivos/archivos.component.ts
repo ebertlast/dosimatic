@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Archivo } from 'app/models/archivo'
 import { Navlink } from 'app/models/navlink'
 import { ArchivoService as ModelService} from 'app/services/modulos/archivos/archivo.service';
+import { AutenticacionService } from 'app/services/seguridad/autenticacion.service';
 import { AppComponent } from 'app/app.component';
 declare var $:any;
 @Component({
@@ -11,7 +12,11 @@ declare var $:any;
 })
 export class ArchivosComponent implements OnInit {
   modelList:Archivo[]=[];
-  constructor(private _modelService:ModelService, private _appComponent:AppComponent) { }
+  constructor(private _modelService:ModelService, private _appComponent:AppComponent,
+    private _autenticacionService:AutenticacionService
+    ) { 
+    this.refreshModels();
+  }
 
   ngOnInit() {
     $('.i-checks').iCheck({
@@ -31,13 +36,16 @@ export class ArchivosComponent implements OnInit {
           .subscribe(
             list => {
               this.modelList=list;
-              console.log(this.modelList);
+              // console.log(this.modelList);
             }
           )
-          .unsubscribe()
+          // .unsubscribe()
 
-      ;      
-      
+      ;            
+  }
+
+  public archivoLeido(archivoid:string,usuario:string=this._autenticacionService.usuario.usuario){
+    return true;
   }
 
 }

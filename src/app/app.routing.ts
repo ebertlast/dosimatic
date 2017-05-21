@@ -12,6 +12,7 @@ import { PerfilViewComponent } from './components/sistema/usuarios/perfiles/perf
 import { MenuesComponent } from './components/sistema/menues/menues.component';
 import { ArchivosComponent } from './components/modulos/archivos/archivos.component';
 import { ArchivoAddComponent } from './components/modulos/archivos/archivo-add/archivo-add.component';
+import { ArchivoViewComponent } from './components/modulos/archivos/archivo-view/archivo-view.component';
 import { GestionComponent } from './components/modulos/archivos/gestion/gestion.component';
 import { ConvencionComponent } from './components/modulos/archivos/convencion/convencion.component';
 
@@ -32,11 +33,12 @@ const appRoutes: Routes = [
     ,{ path:'menues', component:MenuesComponent, canActivate:[AuthGuard] }
     ,{ path:'archivos', component:ArchivosComponent }
     ,{ path:'archivoadd', component:ArchivoAddComponent }
+    ,{ path:'archivoview/:archivoid', component:ArchivoViewComponent }
     ,{ path:'gestion', component:GestionComponent }
     ,{ path:'convencion', component:ConvencionComponent }
-    
+
     ,{ path: '**', redirectTo: 'home' }
-    
+
 ];
 
 export const routing = RouterModule.forRoot(appRoutes);

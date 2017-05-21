@@ -13,6 +13,6 @@ export const app = {
   ,company:"Dosis Unitarias de Colombia"
   ,yearlicense:"2017"
   ,currentuser:"user"
-  ,apiurl:"http://localhost:8080/api"
+  ,apiurl:"http://localhost:8082/Angular/unidosis/apidosimatic/"
   ,chatComponent:false
 };

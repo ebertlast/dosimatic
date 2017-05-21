@@ -48,6 +48,9 @@ import { ArchivoAddComponent } from './components/modulos/archivos/archivo-add/a
 import { GestionComponent } from './components/modulos/archivos/gestion/gestion.component';
 import { ConvencionComponent } from './components/modulos/archivos/convencion/convencion.component';
 import { CapitalizePipe } from './pipes/capitalize.pipe';
+import { FechacortaPipe } from './pipes/fechacorta.pipe';
+import { DocboxContentComponent } from './components/modulos/archivos/docbox-content/docbox-content.component';
+import { ArchivoViewComponent } from './components/modulos/archivos/archivo-view/archivo-view.component';
 
 
 
@@ -78,7 +81,10 @@ import { CapitalizePipe } from './pipes/capitalize.pipe';
     ArchivoAddComponent,
     GestionComponent,
     ConvencionComponent,
-    CapitalizePipe
+    CapitalizePipe,
+    FechacortaPipe,
+    DocboxContentComponent,
+    ArchivoViewComponent
   ],
   imports: [
     BrowserModule,

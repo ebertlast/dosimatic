@@ -21,7 +21,7 @@ export class ArchivoService {
   get(): Observable<Model[]> {
         let _headers = new Headers({ 'Authorization': 'Bearer ' + this._autenticacionService.token });
         let _options = new RequestOptions({ headers: _headers });
-
+        
         return this._http.get(this.URL+"/", _options)
             .map((response: Response) => {
               return this._autenticacionService.extractData(response);
