@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Archivo } from 'app/models/archivo'
 import { Navlink } from 'app/models/navlink'
 import { ArchivoService as ModelService} from 'app/services/modulos/archivos/archivo.service';
+import { AppComponent } from 'app/app.component';
 declare var $:any;
 @Component({
   selector: 'app-archivos',
@@ -10,7 +11,7 @@ declare var $:any;
 })
 export class ArchivosComponent implements OnInit {
   modelList:Archivo[]=[];
-  constructor(private _modelService:ModelService) { }
+  constructor(private _modelService:ModelService, private _appComponent:AppComponent) { }
 
   ngOnInit() {
     $('.i-checks').iCheck({
