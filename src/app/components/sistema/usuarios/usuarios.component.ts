@@ -13,12 +13,12 @@ declare var $:any;
   styleUrls: ['./usuarios.component.css']
 })
 export class UsuariosComponent implements OnInit {
-  private usuarios:Usuario[]=[];
-  private filtro:string="";
-  private message:string;
+  public usuarios:Usuario[]=[];
+  public filtro:string="";
+  public message:string;
 
   // array of all items to be paged
-  private allItems: Usuario[]=[];
+  public allItems: Usuario[]=[];
   // pager object
   pager: any = {};
   // paged items

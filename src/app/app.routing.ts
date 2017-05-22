@@ -5,6 +5,7 @@ import { EnConstruccionComponent } from './components/general/en-construccion/en
 import { UsuariosComponent } from './components/sistema/usuarios/usuarios.component';
 import { UsuarioEditComponent } from './components/sistema/usuarios/usuario-edit/usuario-edit.component';
 import { UsuarioAddComponent } from './components/sistema/usuarios/usuario-add/usuario-add.component';
+import { UsuarioViewComponent } from './components/sistema/usuarios/usuario-view/usuario-view.component';
 import { PerfilesComponent } from './components/sistema/usuarios/perfiles/perfiles.component';
 import { PerfilAddComponent } from './components/sistema/usuarios/perfiles/perfil-add/perfil-add.component';
 import { PerfilEditComponent } from './components/sistema/usuarios/perfiles/perfil-edit/perfil-edit.component';
@@ -30,6 +31,7 @@ const appRoutes: Routes = [
     ,{ path:'usuarios', component:UsuariosComponent, canActivate:[AuthGuard] }
     ,{ path:'usuarioedit/:usuario', component:UsuarioEditComponent, canActivate:[AuthGuard] }
     ,{ path:'usuarioadd', component:UsuarioAddComponent, canActivate:[AuthGuard] }
+    ,{ path:'usuarioview/:usuario', component:UsuarioViewComponent }
     ,{ path:'menues', component:MenuesComponent, canActivate:[AuthGuard] }
     ,{ path:'archivos', component:ArchivosComponent }
     ,{ path:'archivoadd', component:ArchivoAddComponent }

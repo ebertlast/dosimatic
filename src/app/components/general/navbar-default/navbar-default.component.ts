@@ -15,21 +15,21 @@ export class NavbarDefaultComponent implements OnInit, OnChanges {
   @Input()
   usuario:Usuario=new Usuario();
   app=app;
-  private menues:Menu[]=[];
+  public menues:Menu[]=[];
   /*************************************/
-  private _seguridad:boolean=false;
-  private _usuarios:boolean=false;
-  private _perfiles:boolean=false;
-  private _menues:boolean=false;
-  private _gestiondocumental:boolean=false;
-  private _archivos:boolean=false;
-  private _gestion:boolean=false;
+  public _seguridad:boolean=false;
+  public _usuarios:boolean=false;
+  public _perfiles:boolean=false;
+  public _menues:boolean=false;
+  public _gestiondocumental:boolean=false;
+  public _archivos:boolean=false;
+  public _gestion:boolean=false;
   /*************************************/
-  
+
   constructor(
     private _helper:Helper
     ,private _menuesService:MenuesService
-    ,private _router:Router
+    ,public _router:Router
   ) {
    }
   ngOnChanges(changes: SimpleChanges) {
@@ -45,7 +45,7 @@ export class NavbarDefaultComponent implements OnInit, OnChanges {
   }
 
   public recargarMenues(usuario:Usuario):void{
-    if(usuario===null || usuario.usuario===""){  
+    if(usuario===null || usuario.usuario===""){
       return;
     }
 

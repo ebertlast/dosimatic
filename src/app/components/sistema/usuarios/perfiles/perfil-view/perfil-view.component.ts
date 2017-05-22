@@ -21,13 +21,13 @@ declare var swal:any;
 })
 export class PerfilViewComponent implements OnInit {
 	public perfil:Perfil=new Perfil("","",false,null);
-	usuarios:Usuario[]=[];
-	usuariosFiltrados:Usuario[]=[];
-	rutas:Ruta[]=[];
-	rutasFueraDelPerfil:Ruta[]=[];
-	rutasEnPerfil:Ruta[]=[];
-	usuarioAgregar:string;
-	rutaElegida:string;
+	public usuarios:Usuario[]=[];
+	public usuariosFiltrados:Usuario[]=[];
+	public rutas:Ruta[]=[];
+	public rutasFueraDelPerfil:Ruta[]=[];
+	public rutasEnPerfil:Ruta[]=[];
+	public usuarioAgregar:string;
+	public rutaElegida:string;
 	constructor(
 		private _appComponent:AppComponent,
 	    private _perfilesService:PerfilesService,
@@ -94,7 +94,7 @@ export class PerfilViewComponent implements OnInit {
 		    );
 	}
 
-	private getPerfil(){
+	public getPerfil(){
 		let _perfilId:string;
 		this._activatedRoute.params.forEach((params:Params)=>{
 		  _perfilId=params["perfilid"];
@@ -158,7 +158,7 @@ export class PerfilViewComponent implements OnInit {
     },_this);
   }
 
-  private clickEventHandlerTab(tab:string){
+  public clickEventHandlerTab(tab:string){
     // console.log(tab);
     (<HTMLElement>document.querySelector("#tabUsuarios")).setAttribute("class","oculto");
     (<HTMLElement>document.querySelector("#tabPermisos")).setAttribute("class","oculto");
@@ -169,7 +169,7 @@ export class PerfilViewComponent implements OnInit {
     (<HTMLElement>document.querySelector("#header"+tab.replace("#",""))).setAttribute("class","active");
   }
 
-  private getUsuariosEnPerfil(){
+  public getUsuariosEnPerfil(){
     let _perfilId:string=this.perfil.perfilid;
     // console.log(_perfilId);
     if(_perfilId!=="")
@@ -195,7 +195,7 @@ export class PerfilViewComponent implements OnInit {
   /**
    * Carga usuarios que no estan subscritos al perfil
    */
-  private cargarUsuariosFiltrados(){
+  public cargarUsuariosFiltrados(){
     let _perfilId:string=this.perfil.perfilid;
       this._usuariosService.getUsuariosFueraDelPerfil(_perfilId)
           .subscribe(
@@ -213,7 +213,7 @@ export class PerfilViewComponent implements OnInit {
           );
   }
 
-  private asignarPerfil(){
+  public asignarPerfil(){
     if(this.usuarioAgregar===""){
       $('#usuarioPerfil').focus();
       return; 
@@ -228,7 +228,7 @@ export class PerfilViewComponent implements OnInit {
           );
   }
 
-  private desvincularPerfil(usuario:string){
+  public desvincularPerfil(usuario:string){
     if(usuario!=="")
       this._usuariosService.quitarPerfil(usuario,this.perfil.perfilid)
           .subscribe(
@@ -238,7 +238,7 @@ export class PerfilViewComponent implements OnInit {
           );
   }
 
-  private agregarPermisoARuta(){
+  public agregarPermisoARuta(){
     // console.log(this.rutaElegida);
     if(this.rutaElegida===''||this.rutaElegida===null){
       return;
@@ -255,7 +255,7 @@ export class PerfilViewComponent implements OnInit {
           );
     
   }
-  private quitarPermisoARuta(rutaid:string){
+  public quitarPermisoARuta(rutaid:string){
     if(this.perfil.perfilid!=="")
       this._perfilesService.quitarRutaAPerfil(this.perfil.perfilid,rutaid)
           .subscribe(

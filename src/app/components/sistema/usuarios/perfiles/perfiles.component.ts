@@ -14,8 +14,8 @@ import { environment } from '../../../../../environments/environment';
   styleUrls: ['./perfiles.component.css']
 })
 export class PerfilesComponent implements OnInit {
-	private perfiles:Perfil[]=[];
-	private usuarios:Usuario[]=[];
+	public perfiles:Perfil[]=[];
+	public usuarios:Usuario[]=[];
 	constructor(
 		private _appComponent:AppComponent,
 		private _perfilesService:PerfilesService,

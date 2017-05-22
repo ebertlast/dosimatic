@@ -4,7 +4,7 @@
 // The list of which env maps to which file can be found in `angular-cli.json`.
 
 export const environment = {
-  production: false
+  production: true
 };
 
 export const app = {
@@ -13,6 +13,7 @@ export const app = {
   ,company:"Dosis Unitarias de Colombia"
   ,yearlicense:"2017"
   ,currentuser:"user"
-  ,apiurl:"http://localhost:8082/Angular/unidosis/apidosimatic/"
+  // ,apiurl:"http://localhost:8082/Angular/unidosis/apidosimatic/"
+  ,apiurl:"http://dosisunitarias.com/gestion_documental/apidosimatic/"
   ,chatComponent:false
 };

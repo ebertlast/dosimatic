@@ -5,12 +5,13 @@ import { app } from '../../../../environments/environment';
 import { Http, Headers, Response, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs';
 import 'rxjs/add/operator/map';
-import { Archivo as Model } from 'app/models/archivo';
+import { Aprobacion as Model } from 'app/models/aprobacion';
 
 @Injectable()
-export class ArchivoService {
-  URL:string=app.apiurl+'/archivos.php/archivo';
-  TITLE:string="Documentación";
+export class AprobacionService {
+
+  URL:string=app.apiurl+'archivos.php/aprobacion';
+  TITLE:string="Aprobación de documentos";
 
   constructor(
     private _helper:Helper,
@@ -21,7 +22,7 @@ export class ArchivoService {
   get(archivoid=null): Observable<Model[]> {
         let _headers = new Headers({ 'Authorization': 'Bearer ' + this._autenticacionService.token });
         let _options = new RequestOptions({ headers: _headers });
-        let _url:string=this.URL+"/";
+        let _url=this.URL+"/";
         if(archivoid!=null)_url+=archivoid;
         return this._http.get(_url, _options)
             .map((response: Response) => {
@@ -55,6 +56,7 @@ export class ArchivoService {
 
   add(model:Model): Observable<Boolean>{
     let _json = JSON.stringify({ model: model });
+    
     let _params = "json="+_json;
     let _headers = new Headers({
       "Content-Type":"application/x-www-form-urlencoded",
@@ -92,74 +94,17 @@ export class ArchivoService {
             return false;
         }).catch(err=>this._autenticacionService.handleError(err));
   }
-
-  uploadDEPRECATED(file:any){
-    let _json = JSON.stringify({ file: file });
-    let _params = "json="+_json;
-    let _headers = new Headers({
-      "Content-Type":"multipart/form-data",
-    });
+  aprobar(archivoid:string,aprobacion:boolean=true){
+    let _headers = new Headers({ 'Authorization': 'Bearer ' + this._autenticacionService.token });
     let _options = new RequestOptions({ headers: _headers });
-    return this._http.post(app.apiurl+'/upload', _params, {headers: _headers})
+    let _url=app.apiurl+'archivos.php/aprobar/'+archivoid+"/"+((aprobacion)?"1":"0");
+    // console.log(_url);
+    return this._http.get(_url, _options)
         .map((response: Response) => {
-            let data=this._autenticacionService.extractData(response);
-            console.log(data);
-        }).catch(err=>this._autenticacionService.handleError(err));
+          return this._autenticacionService.extractData(response);
+        })
+        .catch(err=>this._autenticacionService.handleError(err))
+        ;
   }
-
-  upload (postData: any, files: File[], url: string = app.apiurl+"/archivos.php/archivo-upload") {
-
-    let headers = new Headers();
-    let formData:FormData = new FormData();
-    formData.append('files', files[0], files[0].name);
-    // Para multiples subidas
-    // for (let i = 0; i < files.length; i++) {
-    //     formData.append(`files[]`, files[i], files[i].name);
-    // }
-
-    if(postData !=="" && postData !== undefined && postData !==null){
-      for (var property in postData) {
-          if (postData.hasOwnProperty(property)) {
-              formData.append(property, postData[property]);
-          }
-      }
-    }
-    var returnReponse = new Promise((resolve, reject) => {
-      this._http.post(url, formData, {
-        headers: headers
-      }).subscribe(
-          res => {
-            // this.responseData = res.json();
-            // resolve(this.responseData);
-            let data=this._autenticacionService.extractData(res);
-            // console.log("Data: ");
-            // console.log(data);
-            resolve(data);
-          },
-          error => {
-            //this.router.navigate(['/login']);
-            // console.log(error);
-            this._autenticacionService.handleError(error);
-            reject(error);
-
-          }
-      );
-    });
-    return returnReponse;
-  }
-
-  download(archivoid): Observable<any> {
-        let _headers = new Headers({ 'Authorization': 'Bearer ' + this._autenticacionService.token });
-        let _options = new RequestOptions({ headers: _headers });
-        let _url=app.apiurl+'archivos.php/archivo-download/'+archivoid;
-        return this._http.get(_url, _options)
-            .map((response: Response) => {
-              return this._autenticacionService.extractData(response);
-            })
-            .catch(err=>this._autenticacionService.handleError(err))
-            ;
-  }
-
   
-
 }

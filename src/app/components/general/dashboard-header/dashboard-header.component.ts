@@ -8,8 +8,8 @@ import { Navlink } from 'app/models/navLink';
 })
 export class DashboardHeaderComponent implements OnInit, OnChanges  {
   @Input()
-  navLinks:Navlink[]=[];
-
+  public navLinks:Navlink[]=[];
+  public title:string="";
   constructor() { }
 
   ngOnInit() {

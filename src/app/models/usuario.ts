@@ -12,6 +12,7 @@ export class Usuario {
         public avatar : string = "",
         public perfilid : string = "",
         public perfil : string = "",
-        public token : string = ""
+        public token : string = "",
+        public firma : string = ""
     ){}
 }

@@ -17,12 +17,12 @@ declare var swal:any;
 })
 
 export class MenuesComponent implements OnInit {
-private menues:Menu[]=[];
-  private rutas:Ruta[]=[];
-  private model:Menu=new Menu("","","",1,true,"","","","",false);
-  private nuevo:boolean=true;
-  private title:string;
-  private menuidOLD:string;
+  public menues:Menu[]=[];
+  public rutas:Ruta[]=[];
+  public model:Menu=new Menu("","","",1,true,"","","","",false);
+  public nuevo:boolean=true;
+  public title:string;
+  public menuidOLD:string;
   constructor(
     private _menuesService:MenuesService,
     private _helper:Helper,

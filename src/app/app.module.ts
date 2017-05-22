@@ -23,6 +23,8 @@ import { PagerService } from './services/general/pager.service';
 import { GestionService } from './services/modulos/archivos/gestion.service';
 import { ConvencionService } from './services/modulos/archivos/convencion.service';
 import { ArchivoService } from './services/modulos/archivos/archivo.service';
+import { VigenciaService } from './services/modulos/archivos/vigencia.service';
+import { AprobacionService } from './services/modulos/archivos/aprobacion.service';
 
 
 /*Componentes*/
@@ -51,6 +53,7 @@ import { CapitalizePipe } from './pipes/capitalize.pipe';
 import { FechacortaPipe } from './pipes/fechacorta.pipe';
 import { DocboxContentComponent } from './components/modulos/archivos/docbox-content/docbox-content.component';
 import { ArchivoViewComponent } from './components/modulos/archivos/archivo-view/archivo-view.component';
+import { UsuarioViewComponent } from './components/sistema/usuarios/usuario-view/usuario-view.component';
 
 
 
@@ -84,7 +87,8 @@ import { ArchivoViewComponent } from './components/modulos/archivos/archivo-view
     CapitalizePipe,
     FechacortaPipe,
     DocboxContentComponent,
-    ArchivoViewComponent
+    ArchivoViewComponent,
+    UsuarioViewComponent
   ],
   imports: [
     BrowserModule,
@@ -95,7 +99,7 @@ import { ArchivoViewComponent } from './components/modulos/archivos/archivo-view
   providers: [
     Helper, AutenticacionService, UsuariosService, AuthGuard, MenuesService, AppComponent,
     NavbarDefaultComponent, PerfilesService, RutasService, PagerService, GestionService,
-    ConvencionService, ArchivoService
+    ConvencionService, ArchivoService, AprobacionService, VigenciaService
   ],
   bootstrap: [AppComponent]
 })

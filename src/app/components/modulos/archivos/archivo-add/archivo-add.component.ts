@@ -29,7 +29,7 @@ export class ArchivoAddComponent implements OnInit {
   
   constructor(
     private _appComponent:AppComponent,
-    private _helper:Helper,
+    public _helper:Helper,
     private _modelService:ModelService,
     private _gestionService:GestionService,
     private _convencionService:ConvencionService,

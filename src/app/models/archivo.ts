@@ -8,6 +8,7 @@ export class Archivo {
         public denominacion:string="",//Nombre del archivo que aparecerá en el frontend
         public observaciones:string="",
         public usuario:string="",
-        public usuarionombres:string="",
+        public usuarionombre:string="",
+        public fecha:Date=null
     ){}
 }

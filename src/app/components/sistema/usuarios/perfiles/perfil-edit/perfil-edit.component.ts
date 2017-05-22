@@ -14,7 +14,7 @@ declare var $:any;
   styleUrls: ['./perfil-edit.component.css']
 })
 export class PerfilEditComponent implements OnInit {
-  private perfil:Perfil=new Perfil();
+  public perfil:Perfil=new Perfil();
   public denominacionOld:string;
   public perfilidOld:string;
   
@@ -43,10 +43,10 @@ export class PerfilEditComponent implements OnInit {
         radioClass: 'iradio_square-green',
       });
   }
-  private getActivo(){
+  public getActivo(){
     return this._helper.getCheckedRadio("i-checks-activo");
   }
-  private refrescarNavegacion(){
+  public refrescarNavegacion(){
     // this._appComponent.setTitle("Editando Perfil "+this.perfil.denominacion);
     let links:Navlink[]=[
       {url:"usuarios",title:"Usuarios",active:false},
@@ -60,7 +60,7 @@ export class PerfilEditComponent implements OnInit {
       // console.log(this.perfil);
     }
   }
-  private getPerfil(){
+  public getPerfil(){
     let _perfilId:string;
     this._activatedRoute.params.forEach((params:Params)=>{
       _perfilId=params["perfilid"];
@@ -92,7 +92,7 @@ export class PerfilEditComponent implements OnInit {
           );
   }
 
-  private onSubmit(){
+  public onSubmit(){
     this.perfil.activo=this.getActivo();
     // this._helper.notificationToast("Datos del perfil actualizados","Éxito");
     // this._router.navigate(['/perfil',this.perfil.perfilid]);
@@ -101,7 +101,7 @@ export class PerfilEditComponent implements OnInit {
   }
 
 
-  private editPerfil(){
+  public editPerfil(){
     let _perfilId:string;
     _perfilId=this.perfilidOld;
     if(_perfilId!=="")

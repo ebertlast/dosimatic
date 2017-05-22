@@ -12,7 +12,7 @@ declare var $:any;
 })
 export class AppComponent {
   title = 'app works!';
-  private currentUser:Usuario=new Usuario();
+  public currentUser:Usuario=new Usuario();
   links:Navlink[]=[];
   constructor(
     private _helper:Helper

@@ -15,15 +15,15 @@ declare var $:any;
   styleUrls: ['./usuario-edit.component.css']
 })
 export class UsuarioEditComponent implements OnInit {
-  private model:Usuario=new Usuario();
-  private perfiles:Perfil[]=[];
-  private valids:string[]=[];
-  private formOK:boolean=false;
-  private usuariosRegistrados:Usuario[]=[];
-  private confirmClave:string='';
-  private usuarioOLD:string='';
-  private razonsocialOLD:string='';
-  private emailOLD:string='';
+  public model:Usuario=new Usuario();
+  public perfiles:Perfil[]=[];
+  public valids:string[]=[];
+  public formOK:boolean=false;
+  public usuariosRegistrados:Usuario[]=[];
+  public confirmClave:string='';
+  public usuarioOLD:string='';
+  public razonsocialOLD:string='';
+  public emailOLD:string='';
   constructor(private _appComponent:AppComponent, 
     private _perfilesService:PerfilesService, 
     private _usuariosService:UsuariosService,
@@ -75,10 +75,10 @@ export class UsuarioEditComponent implements OnInit {
         // console.log(e.type);
     });
   }
-  private goBack(){
+  public goBack(){
     this._helper.goBack();
   }
-  private refrescarNavegacion(){
+  public refrescarNavegacion(){
     // this._appComponent.setTitle("Editando Perfil "+this.perfil.denominacion);
     let links:Navlink[]=[
       {url:"/usuarios",title:"Usuarios",active:false},
@@ -86,7 +86,7 @@ export class UsuarioEditComponent implements OnInit {
       ];
     this._appComponent.setLinks(links);
   }
-  private getUsuario(){
+  public getUsuario(){
     let _usuario:string;
     this._activatedRoute.params.forEach((params:Params)=>{
       _usuario=params["usuario"];
@@ -131,7 +131,7 @@ export class UsuarioEditComponent implements OnInit {
           );
   }
  
-  private cargarPerfiles(){
+  public cargarPerfiles(){
     this._perfilesService.getPerfiles()
         .subscribe(
           perfiles => {
@@ -139,7 +139,7 @@ export class UsuarioEditComponent implements OnInit {
           }
         );
   }
-  private cargarUsuariosRegistrados(){
+  public cargarUsuariosRegistrados(){
     this._usuariosService.getUsuarios()
         .subscribe(
           usuarios => {

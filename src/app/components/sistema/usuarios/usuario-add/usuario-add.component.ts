@@ -14,16 +14,16 @@ declare var $:any;
   styleUrls: ['./usuario-add.component.css']
 })
 export class UsuarioAddComponent implements OnInit {
-  private model:Usuario;
-  private perfiles:Perfil[]=[];
-  private valids:string[]=[];
-  private formOK:boolean=false;
-  private usuariosRegistrados:Usuario[]=[];
-  private confirmClave:string='';
+  public model:Usuario;
+  public perfiles:Perfil[]=[];
+  public valids:string[]=[];
+  public formOK:boolean=false;
+  public usuariosRegistrados:Usuario[]=[];
+  public confirmClave:string='';
   constructor(private _appComponent:AppComponent, 
     private _perfilesService:PerfilesService, 
     private _usuariosService:UsuariosService,
-    private _helper:Helper,
+    public _helper:Helper,
     private _router:Router) {
     this.model=new Usuario();
 
