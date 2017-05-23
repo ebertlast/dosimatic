@@ -5,43 +5,47 @@ import { Archivo } from 'app/models/archivo';
 import { ArchivoService } from 'app/services/modulos/archivos/archivo.service';
 import { PagerService } from 'app/services/general/pager.service';
 import { Helper } from 'app/helpers/helper';
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  public archivos:Archivo[]=[];
-  public filtro:string="";
-  public message:string="";
-  public allItems: Archivo[]=[];
+  public archivos: Archivo[] = [];
+  public filtro = '';
+  public filtroAux = '';
+  public message = '';
+  public allItems: Archivo[] = [];
+  public intervalo = 0;
   pager: any = {};
-  pagedItems: Archivo[]=[];
+  pagedItems: Archivo[] = [];
 
   constructor(
-    private _appComponent:AppComponent
-    ,private _archivoService:ArchivoService
-    ,private _helper:Helper
-    ,private _pagerService: PagerService
+    private _appComponent: AppComponent
+    , private _archivoService: ArchivoService
+    , private _helper: Helper
+    , private _pagerService: PagerService
   ) { }
 
   ngOnInit() {
-    let links:Navlink[]=[];
+    const links: Navlink[] = [];
     this._appComponent.setLinks(links);
 
     this.cargarArchivos();
   }
-  
+
   public cargarArchivos(){
     this._archivoService.get()
           .subscribe(
             list => {
-              this.archivos=list;
-              this.allItems=this.archivos;
-              console.log(this.archivos);
+              this.archivos = list;
+              this.allItems = this.archivos;
+              // console.log(this.archivos);
+              this.consultarArchivos();
             }
           )
-      ;            
+      ;
   }
 
   setPage(page: number) {
@@ -55,30 +59,40 @@ export class HomeComponent implements OnInit {
     // console.log(this.pager);
     this.pagedItems = this.allItems.slice(this.pager.startIndex, this.pager.endIndex + 1);
   }
-  consultarArchivos(){
+  consultarArchivos() {
+    this.filtro = this.filtroAux;
+    const startTime = new Date();
+    const startMsec = startTime.getMilliseconds();
+
         // console.log("Filtro:"+this.filtro);
-        this.allItems=this.archivos;
-        if(this.filtro==="" && this.filtro!==""){
+        this.allItems = this.archivos;
+        if(this.filtro === '' && this.filtro !== ''){
           this.setPage(1);
-          
+
           return;
         }
-        var re = new RegExp(this.filtro.toLowerCase(), 'g');
-        var ss = this.archivos;
-        var matches = ss.filter(function(s) {
-            let concat:string=s.archivoid.concat(s.denominacion).concat(s.archivoidaux).toLowerCase();
+        const re = new RegExp(this.filtro.toLowerCase(), 'g');
+        const ss = this.archivos;
+        const matches = ss.filter(function(s) {
+            const concat = s.archivoid.concat(s.denominacion).concat(s.archivoidaux).toLowerCase();
             return concat.toLowerCase().match(re);
         });
-        this.allItems=matches;
-        if(this.allItems.length<=0)
-            this.message="Has escrito ("+this.filtro+") y el o los productos que contienen ese texto como nombre no están disponibles en este momento"        
-        else
-            this.message="";
+        this.allItems = matches;
+        if ( this.allItems.length <= 0 ) {
+            this.message = 'Has escrito (' + this.filtro;
+            this.message += ') y el o los registros que contienen ese texto como nombre no están disponibles en este momento';
+        }else {
+            this.message = '';
+        }
         // console.log(this.allItems.length);
         // console.log(this.pager);
         // console.log(this.pagedItems);
         this.setPage(1);
         // console.log(this.allItems);
-        
+    const elapsed = (startTime.getTime() - startMsec) / 1000;
+    this.intervalo = elapsed;
   }
+
+
+
 }

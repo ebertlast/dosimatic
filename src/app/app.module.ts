@@ -25,6 +25,7 @@ import { ConvencionService } from './services/modulos/archivos/convencion.servic
 import { ArchivoService } from './services/modulos/archivos/archivo.service';
 import { VigenciaService } from './services/modulos/archivos/vigencia.service';
 import { AprobacionService } from './services/modulos/archivos/aprobacion.service';
+import { RevisionService } from './services/modulos/archivos/revision.service';
 
 
 /*Componentes*/
@@ -99,7 +100,7 @@ import { UsuarioViewComponent } from './components/sistema/usuarios/usuario-view
   providers: [
     Helper, AutenticacionService, UsuariosService, AuthGuard, MenuesService, AppComponent,
     NavbarDefaultComponent, PerfilesService, RutasService, PagerService, GestionService,
-    ConvencionService, ArchivoService, AprobacionService, VigenciaService
+    ConvencionService, ArchivoService, AprobacionService, VigenciaService, RevisionService
   ],
   bootstrap: [AppComponent]
 })

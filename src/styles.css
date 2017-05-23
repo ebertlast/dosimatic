@@ -27,6 +27,9 @@
 /*Wizards*/
 @import url('assets/css/plugins/steps/jquery.steps.css');
 
+/*Rango de fechas*/
+@import url("assets/css/plugins/daterangepicker/daterangepicker-bs3.css");
+
 .oculto{
     display: none;
 }

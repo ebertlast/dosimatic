@@ -21,7 +21,7 @@ export class AppComponent {
       this.currentUser=JSON.parse(localStorage.getItem(app.currentuser)).usuario;
     }
   }
-  
+
   public setUsuario(user:Usuario){
     this.currentUser=user;
      if(this.currentUser.usuario==="")
