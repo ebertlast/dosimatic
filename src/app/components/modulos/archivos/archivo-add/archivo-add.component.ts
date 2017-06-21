@@ -22,125 +22,156 @@ declare var $:any;
   styleUrls: ['./archivo-add.component.css']
 })
 export class ArchivoAddComponent implements OnInit {
-  model:Model=new Model();
-  models:Model[]=[];
-  convenciones:Convencion[]=[];
-  gestiones:Gestion[]=[];
-  
+  model: Model = new Model();
+  models: Model[] = [];
+  convenciones: Convencion[] = [];
+  gestiones: Gestion[] = [];
+  uploading = false;
+  excel = true;
   constructor(
-    private _appComponent:AppComponent,
-    public _helper:Helper,
-    private _modelService:ModelService,
-    private _gestionService:GestionService,
-    private _convencionService:ConvencionService,
-    private _autenticacionService:AutenticacionService,
-    private _router:Router
-  ) { 
-    this.model.usuario=this._autenticacionService.usuario.usuario;
+    private _appComponent: AppComponent,
+    public _helper: Helper,
+    private _modelService: ModelService,
+    private _gestionService: GestionService,
+    private _convencionService: ConvencionService,
+    private _autenticacionService: AutenticacionService,
+    private _router: Router
+  ) {
+    this.model.usuario = this._autenticacionService.usuario.usuario;
   }
-  
+
   ngOnInit() {
-    let links:Link[]=[
-      {url:"",title:"Gestión Documental",active:true},
-      {url:"/archivos",title:"Documentos",active:false},
-      {url:"",title:"Nuevo documento",active:true},
+    const links: Link[] = [
+      {url: '', title: 'Gestión Documental', active: true},
+      {url: '/archivos', title: 'Documentos', active: false},
+      {url: '', title: 'Nuevo documento', active: true},
       ];
     this._appComponent.setLinks(links);
     this.gestionesReload();
     this.convencionesReload();
     this.modelsReload();
   }
-  gestionesReload(){
-    this.gestiones=[];
+  gestionesReload() {
+    this.gestiones = [];
      this._gestionService.gestiones()
-		    .subscribe(
-		      list => {
-		        this.gestiones=list;
-		        // console.log("Gestiones: ");
-		        // console.log(this.gestiones);
-		      }
-		    );
+          .subscribe(
+            list => {
+              this.gestiones = list;
+		          // console.log("Gestiones: ");
+		          // console.log(this.gestiones);
+          }
+        );
   }
-  convencionesReload(){
-    this.convenciones=[];
+  convencionesReload() {
+    this.convenciones = [];
     this._convencionService.get()
-		    .subscribe(
-		      list => {
-		        this.convenciones=list;
+        .subscribe(
+          list => {
+            this.convenciones = list;
 		        // console.log("Convenciones: ");
 		        // console.log(this.convenciones);
-		      }
-		    );
+          }
+        );
   }
 
-  fileChangeEvent(filesInput:any){
-    let files = filesInput.srcElement.files;
-    if(files.length<=0){      
+  fileChangeEvent(filesInput: any) {
+    const files = filesInput.srcElement.files;
+    if (files.length <= 0) {
       return;
     }
-    
-    let postData = {field1:"field1", field2:"field2"}; // Put your form data variable. This is only example.
-    this._modelService.upload(postData,files).then(nombre => {
+    const postData = {field1: 'field1', field2: 'field2'}; // Put your form data variable. This is only example.
+    this.uploading = true;
+    this._modelService.upload(postData, files).then(nombre => {
         // console.log(nombre);
-        this.model.nombre=nombre.toString();
+        this.model.nombre = nombre.toString();
+        this.uploading = false;
     });
   }
 
-  modelsReload(){
-    // if(this.model.convencionid!==""&&this.model.gestionid!==""){
+  modelsReload() {
+    // if(this.model.convencionid!==''&&this.model.gestionid!==''){
       this._modelService.get()
           .subscribe(
             list => {
-              this.models=list;
+              this.models = list;
             }
-      );      
+      );
     // }
   }
-  archivoid(){
-    if(this.models.length<=0){
-      this.model.archivoid=this.model.convencionid+this.model.gestionid+"001";
-    }else{
-      let i:number=1;
+  archivoid() {
+    if (this.models.length <= 0) {
+      this.model.archivoid = this.model.convencionid + this.model.gestionid + '001';
+    }else {
+      let i = 1;
       this.models.forEach(x => {
-        if(this.model.convencionid===x.convencionid && this.model.gestionid===x.gestionid)
+        if (this.model.convencionid === x.convencionid && this.model.gestionid === x.gestionid) {
           i++;
+        }
       });
-      let id="000"+i.toString();
-      this.model.archivoid=this.model.convencionid+this.model.gestionid+id.substr(id.length-3);
+      let id = '000' + i.toString();
+      this.model.archivoid = this.model.convencionid + this.model.gestionid + id.substr(id.length - 3);
+
+      if (this.model.archivoidaux !== '') {
+        this.model.archivoid = this.model.archivoidaux;
+        const omitido = true;
+        if (!omitido) {
+          this.model.archivoid = '';
+          let j = this.model.archivoidaux.length;
+          let letra = '';
+          while (j--) {
+            letra = this.model.archivoidaux[j];
+            if (letra >= '0' && letra <= '9') {
+            }else {
+              this.model.archivoid = (this.model.archivoidaux[j]) + this.model.archivoid;
+            }
+          }
+        }else {
+
+        }
+        this.model.archivoid = this.model.convencionid + this.model.archivoid;
+
+        i = 1;
+        this.models.forEach(x => {
+          if (this.model.archivoidaux === x.archivoidaux){ i++; }
+        });
+        id = '000' + i.toString();
+        this.model.archivoid += '-' + id.substr(id.length - 3);
+      }
+
     }
     console.log(this.model);
   }
 
-  onSubmitHandler(){
-    if(this.model.archivoid===""){
-      this._helper.notificationToast("Debes ingresar un identificador al documento","Gestión Documental","error");      
+  onSubmitHandler() {
+    if (this.model.archivoid === '') {
+      this._helper.notificationToast('Debes ingresar un identificador al documento', 'Gestión Documental', 'error');
       return false;
     }
-    if(this.model.gestionid===""){
-      this._helper.notificationToast("Debes seleccionar el proceso que pertenece el documento","Gestión Documental","error");      
+    if (this.model.gestionid === '') {
+      this._helper.notificationToast('Debes seleccionar el proceso que pertenece el documento', 'Gestión Documental', 'error');
       return false;
     }
-    if(this.model.convencionid===""){
-      this._helper.notificationToast("Debes seleccionar la convención del documento","Gestión Documental","error");      
+    if (this.model.convencionid === '') {
+      this._helper.notificationToast('Debes seleccionar la convención del documento', 'Gestión Documental', 'error');
       return false;
     }
-    if(this.model.nombre===""){
-      this._helper.notificationToast("Debes seleccionar un documento","Gestión Documental","error");      
+    if (this.model.nombre === '') {
+      this._helper.notificationToast('Debes seleccionar un documento', 'Gestión Documental', 'error');
       return false;
     }
 
     this._modelService.add(this.model)
         .subscribe(
           success => {
-            if(success===true){
-              this._helper.notificationToast("Documento agregado satisfactoriamente a la base de datos.","Gestión Documental");
-              this._router.navigate(["/archivos"]);
+            if (success === true) {
+              this._helper.notificationToast('Documento agregado satisfactoriamente a la base de datos.', 'Gestión Documental');
+              this._router.navigate(['/archivos']);
             }
           }
         );
     return false;
-      
-    
+
+
   }
-  
+
 }

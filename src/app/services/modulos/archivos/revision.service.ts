@@ -22,7 +22,7 @@ export class RevisionService {
     const _headers = new Headers({ 'Authorization': 'Bearer ' + this._autenticacionService.token });
     const _options = new RequestOptions({ headers: _headers });
     let _url = this.URL + '/';
-    if (archivoid != null) { _url += archivoid; }
+    if (archivoid !== null) { _url += archivoid; }
     return this._http.get(_url, _options)
         .map((response: Response) => {
           return this._autenticacionService.extractData(response);
@@ -96,10 +96,10 @@ export class RevisionService {
         }).catch(err => this._autenticacionService.handleError(err));
   }
 
-  aprobar(archivoid: string, aprobacion: boolean= true) {
+  revisar(archivoid: string, aprobacion: boolean= true) {
     const _headers = new Headers({ 'Authorization': 'Bearer ' + this._autenticacionService.token });
     const _options = new RequestOptions({ headers: _headers });
-    const _url = app.apiurl + 'archivos.php/aprobar/' + archivoid + '/' + ((aprobacion) ? '1' : '0');
+    const _url = app.apiurl + 'archivos.php/revisar/' + archivoid + '/' + ((aprobacion) ? '1' : '0');
     return this._http.get(_url, _options)
         .map((response: Response) => {
           return this._autenticacionService.extractData(response);

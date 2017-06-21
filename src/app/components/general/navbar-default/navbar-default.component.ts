@@ -5,7 +5,7 @@ import { Menu } from 'app/models/menu';
 import { Helper } from 'app/helpers/helper';
 import { MenuesService } from 'app/services/sistema/menues.service';
 import { Router } from '@angular/router';
-declare var jQuery:any;
+declare var jQuery: any;
 @Component({
   selector: 'app-navbar-default',
   templateUrl: './navbar-default.component.html',
@@ -17,13 +17,13 @@ export class NavbarDefaultComponent implements OnInit, OnChanges {
   app=app;
   public menues:Menu[]=[];
   /*************************************/
-  public _seguridad:boolean=false;
-  public _usuarios:boolean=false;
-  public _perfiles:boolean=false;
-  public _menues:boolean=false;
-  public _gestiondocumental:boolean=false;
-  public _archivos:boolean=false;
-  public _gestion:boolean=false;
+  public _seguridad = false;
+  public _usuarios = false;
+  public _perfiles = false;
+  public _menues = false;
+  public _gestiondocumental = false;
+  public _archivos = false;
+  public _gestion = false;
   /*************************************/
 
   constructor(

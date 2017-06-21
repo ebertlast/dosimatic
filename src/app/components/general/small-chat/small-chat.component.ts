@@ -6,7 +6,7 @@ import { app } from '../../../../environments/environment';
   styleUrls: ['./small-chat.component.css']
 })
 export class SmallChatComponent implements OnInit {
-  habilitado:boolean=app.chatComponent;
+  habilitado: boolean = app.chatComponent;
   constructor() { }
 
   ngOnInit() {

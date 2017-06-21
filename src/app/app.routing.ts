@@ -19,27 +19,26 @@ import { ConvencionComponent } from './components/modulos/archivos/convencion/co
 
 import { AuthGuard } from './guards/authguard';
 const appRoutes: Routes = [
-     { path:'', redirectTo:'home', pathMatch:'full' }
-    ,{ path:'ingresar', component:IngresarComponent }
-    ,{ path:'salir', component:IngresarComponent }
-    ,{ path:'home', component:HomeComponent, canActivate:[AuthGuard] }
-    ,{ path:'enconstruccion', component:EnConstruccionComponent }
-    ,{ path:'perfiles', component:PerfilesComponent, canActivate:[AuthGuard] }
-    ,{ path:'perfiledit/:perfilid', component:PerfilEditComponent, canActivate:[AuthGuard] }
-    ,{ path:'perfiladd', component:EnConstruccionComponent, canActivate:[AuthGuard] }
-    ,{ path:'perfil/:perfilid', component:PerfilViewComponent, canActivate:[AuthGuard] }
-    ,{ path:'usuarios', component:UsuariosComponent, canActivate:[AuthGuard] }
-    ,{ path:'usuarioedit/:usuario', component:UsuarioEditComponent, canActivate:[AuthGuard] }
-    ,{ path:'usuarioadd', component:UsuarioAddComponent, canActivate:[AuthGuard] }
-    ,{ path:'usuarioview/:usuario', component:UsuarioViewComponent }
-    ,{ path:'menues', component:MenuesComponent, canActivate:[AuthGuard] }
-    ,{ path:'archivos', component:ArchivosComponent }
-    ,{ path:'archivoadd', component:ArchivoAddComponent }
-    ,{ path:'archivoview/:archivoid', component:ArchivoViewComponent }
-    ,{ path:'gestion', component:GestionComponent }
-    ,{ path:'convencion', component:ConvencionComponent }
-
-    ,{ path: '**', redirectTo: 'home' }
+    { path: '', redirectTo: 'home', pathMatch: 'full' },
+    { path: 'ingresar', component: IngresarComponent },
+    { path: 'salir', component: IngresarComponent },
+    { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
+    { path: 'enconstruccion', component: EnConstruccionComponent },
+    { path: 'perfiles', component: PerfilesComponent, canActivate: [AuthGuard] },
+    { path: 'perfiledit/:perfilid', component: PerfilEditComponent, canActivate: [AuthGuard] },
+    { path: 'perfiladd', component: EnConstruccionComponent, canActivate: [AuthGuard] },
+    { path: 'perfil/:perfilid', component: PerfilViewComponent, canActivate: [AuthGuard] },
+    { path: 'usuarios', component: UsuariosComponent, canActivate: [AuthGuard] },
+    { path: 'usuarioedit/:usuario', component: UsuarioEditComponent, canActivate: [AuthGuard] },
+    { path: 'usuarioadd', component: UsuarioAddComponent, canActivate: [AuthGuard] },
+    { path: 'usuarioview/:usuario', component: UsuarioViewComponent },
+    { path: 'menues', component: MenuesComponent, canActivate: [AuthGuard] },
+    { path: 'archivos', component: ArchivosComponent },
+    { path: 'archivoadd', component: ArchivoAddComponent },
+    { path: 'archivoview/:archivoid', component: ArchivoViewComponent },
+    { path: 'gestion', component: GestionComponent },
+    { path: 'convencion', component: ConvencionComponent },
+    { path: '**', redirectTo: 'home' }
 
 ];
 

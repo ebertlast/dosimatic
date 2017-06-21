@@ -11,7 +11,7 @@
                             <ul class="dropdown-menu animated fadeInRight m-t-xs">
                                 <li><a [routerLink]="['/usuarioview/'+usuario.usuario]">Perfil</a></li>
                                 <li class="divider"></li>
-                                <li><a [routerLink]="['/ingresar']">Cerrar sesión</a></li>
+                                <li><a [routerLink]="['/ingresar']">Cerrar sesi&oacute;n</a></li>
                             </ul>
                         </div>
                         <div class="logo-element">
@@ -54,11 +54,11 @@
                     </li>
 
                     <li routerLinkActive="active" [ngClass]="{'oculto':!_gestiondocumental}">
-                        <a href=""><i class="fa fa-edit"></i> <span class="nav-label">Gestión Documental</span><span class="fa arrow"></span></a>
+                        <a href=""><i class="fa fa-edit"></i> <span class="nav-label">Gesti&oacute;n Documental</span><span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level collapse " [ngClass]="{'in':_router.url.indexOf('archivo')!=-1||_router.url.indexOf('gestion')!=-1||_router.url.indexOf('convencion')!=-1}">
-                            <li routerLinkActive="active"><a [routerLink]="['/gestion']">Procesos</a></li>
+                            <li routerLinkActive="active"><a [routerLink]="['/gestion']">Gesti&oacute;n</a></li>
                             <li routerLinkActive="active"><a [routerLink]="['/convencion']">Convenciones</a></li>
-                            <li routerLinkActive="active"><a [routerLink]="['/archivos']">Documentación</a></li>
+                            <li routerLinkActive="active"><a [routerLink]="['/archivos']">Documentaci&oacute;n</a></li>
                             <li routerLinkActive="active" style="display:none"><a [routerLink]="['/archivoadd']"></a></li>
                         </ul>
                     </li>

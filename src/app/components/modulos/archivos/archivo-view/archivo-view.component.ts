@@ -12,6 +12,7 @@ import { UsuariosService } from 'app/services/seguridad/usuarios.service';
 import { RevisionService } from 'app/services/modulos/archivos/revision.service';
 import { app } from '../../../../../environments/environment';
 import * as moment from 'moment';
+// import { FechacortaPipe } from '../../../../pipes/fechacorta.pipe';
 // import moment = require("moment");
 
 declare var $: any;
@@ -30,6 +31,14 @@ export class ArchivoViewComponent implements OnInit {
   public fdesde= '';
   public fhasta= '';
   public me: string;
+
+  public botonesAprobacion = true;
+  public botonesRevision = true;
+  public aprobado = false;
+  public revisado = false;
+
+  public archivos: Archivo[] = [];
+  public excel = false;
   constructor(
     private _activatedRoute: ActivatedRoute,
     private _appComponent: AppComponent,
@@ -38,8 +47,9 @@ export class ArchivoViewComponent implements OnInit {
     private _usuariosService: UsuariosService,
     private _aprobacionService: AprobacionService,
     private _revisionService: RevisionService,
-    private _autenticacionService: AutenticacionService
+    private _autenticacionService: AutenticacionService,
     // private _router:Router
+    // private _fechaCortaPipe: FechacortaPipe
   ) {
     this.me = this._autenticacionService.usuario.usuario;
   }
@@ -49,30 +59,66 @@ export class ArchivoViewComponent implements OnInit {
     this.refreshUsuarios();
 
     //  $('input[name="daterange"]').daterangepicker();
-    $('#fdesde').datepicker({
+    $('#fechaexp').datepicker({
         startView: 2,
         todayBtn: 'linked',
         keyboardNavigation: false,
         forceParse: false,
         autoclose: true
     });
-    $('#fhasta').datepicker({
-        startView: 2,
-        todayBtn: 'linked',
-        keyboardNavigation: false,
-        forceParse: false,
-        autoclose: true
-    });
-
-    // $('#fdesde').on('change',()=>{
-    //     // this.validaciones();
-    //     console.log($('#fdesde').val());
+    // $('#fhasta').datepicker({
+    //     startView: 2,
+    //     todayBtn: 'linked',
+    //     keyboardNavigation: false,
+    //     forceParse: false,
+    //     autoclose: true
     // });
+
+    $('#fechaexp').on('change', () => {
+        // console.log($('#fechaexp').val());
+        const fecha = $('#fechaexp').val();
+        const separators = ['\\.', '\\-', '\\/'];
+        const bits = fecha.split(new RegExp(separators.join('|'), 'g'));
+        const yyyy = bits[2];
+        const mm = bits[1];
+        const dd = bits[0];
+        // alert(dd + '/' + mm + '/' + yyyy);
+        this.archivo.fechaexp = new Date(yyyy, mm, dd);
+
+        // console.log(this.archivo);
+
+        this._archivoService.edit(this.archivo.archivoid, this.archivo)
+          .subscribe(
+            actualizado => {
+              if (actualizado) {
+                // this.archivo.fechaexp = $('#fechaexp').val();
+              }
+            }
+          );
+    });
     // $('#fhasta').on('change',()=>{
     //     // this.validaciones();
     //     console.log($('#fdesde').val());
     // });
+    this.getArchivos();
+  }
+  getArchivos() {
+    this.archivos = [];
+      this._archivoService.get()
+          .subscribe(
+            list => {
+              list.forEach(archivo => {
+                if ( (archivo.archivoidaux === this.archivo.archivoid)
+                  && archivo.archivoid !== this.archivo.archivoid && archivo.archivoidaux !== '' ) {
+                    // console.log(archivo.archivoid);
 
+                  this.archivos.push(archivo);
+                }
+              });
+              // console.log(this.archivos);
+              // this.archivos = list;
+            }
+          );
   }
   setLinks() {
     const links: Link[] = [
@@ -84,7 +130,7 @@ export class ArchivoViewComponent implements OnInit {
   }
   getArchivo() {
     let _archivoid: string;
-    this._activatedRoute.params.forEach((params: Params)=>{
+    this._activatedRoute.params.forEach((params: Params) => {
       _archivoid = params['archivoid'];
     });
 
@@ -94,6 +140,12 @@ export class ArchivoViewComponent implements OnInit {
             archivo => {
               this.archivo = archivo[0];
               // console.log(this.archivo);
+              const fechaexp = new Date(this.archivo.fechaexp);
+              $('#fechaexp').val(fechaexp.getDate() + '/' + fechaexp.getMonth() + '/' + fechaexp.getFullYear());
+              if (this.archivo.nombre.indexOf('.pdf') < 0 ) {
+                this.excel = true;
+              }
+              // this._fechaCortaPipe.transform()
               this.setLinks();
               this.getAprobaciones();
             }
@@ -102,8 +154,7 @@ export class ArchivoViewComponent implements OnInit {
       this._helper.goBack();
     }
   }
-
-  refreshUsuarios(){
+  refreshUsuarios() {
     this._usuariosService.getUsuarios()
         .subscribe(
           usuarios => {
@@ -115,16 +166,22 @@ export class ArchivoViewComponent implements OnInit {
     //  this.cargarUsuariosFiltrados();
   }
   getAprobaciones() {
+    this.botonesAprobacion = true;
     this.aprobaciones = [];
     this._aprobacionService.get(this.archivo.archivoid)
         .subscribe(
           aprobaciones => {
             this.aprobaciones = aprobaciones;
+            // console.log(this.aprobaciones);
             this.aprobaciones.forEach(aprobacion => {
               this.usuarios.forEach(usuario => {
                 if (usuario.usuario === aprobacion.usuario) {
                   const index: number = this.usuarios.indexOf(usuario);
                   this.usuarios.splice(index, 1);
+                  if (this._autenticacionService.usuario.usuario === usuario.usuario) {
+                    this.botonesAprobacion = false;
+                    this.aprobado = aprobacion.aprobado;
+                  }
                 }
               });
             });
@@ -145,7 +202,6 @@ export class ArchivoViewComponent implements OnInit {
           }
         );
   }
-
   delAprobacion(aprobacionid: string) {
     const eliminar = false;
     const _this: ArchivoViewComponent = this;
@@ -169,7 +225,7 @@ export class ArchivoViewComponent implements OnInit {
                   success => {
                     if (success === true){
                       _this.getAprobaciones();
-                      _this.refreshUsuarios();
+                      // _this.refreshUsuarios();
                       swal('¡Registro eliminado!', 'El registro ha sido eliminado de la base de datos satisfactoriamente.', 'success');
                     }
                   }
@@ -183,7 +239,8 @@ export class ArchivoViewComponent implements OnInit {
     this._aprobacionService.aprobar(archivoid)
         .subscribe(
           success => {
-            // if(success===true){
+            // console.log(success);
+            // if (success === true) {
               this.getAprobaciones();
               // _this.refreshUsuarios();
             // }
@@ -191,7 +248,7 @@ export class ArchivoViewComponent implements OnInit {
         );
   }
   desaprobar(archivoid: string) {
-    this._aprobacionService.aprobar(archivoid,false)
+    this._aprobacionService.aprobar(archivoid, false)
         .subscribe(
           success => {
             // if(success===true){
@@ -206,7 +263,7 @@ export class ArchivoViewComponent implements OnInit {
                 .subscribe(
                   data => {
                     console.log(data);
-                     window.open(app.apiurl+data.filename);
+                     window.open(app.apiurl + data.filename);
                     // this.downloadFile(data);
                     // console.log(data);
                   }
@@ -247,22 +304,31 @@ export class ArchivoViewComponent implements OnInit {
     }, _this);
   }
   getRevisiones() {
+    this.botonesRevision = true;
     this.revisiones = [];
     this._revisionService.get(this.archivo.archivoid)
         .subscribe(
           revisiones => {
             this.revisiones = revisiones;
-            console.log('Revisiones: ');
-            console.log(this.revisiones);
+            // console.log('Revisiones: ');
+            // console.log(this.revisiones);
             this.revisiones.forEach(revision => {
+              // console.log(revision);
               this.usuarios.forEach(usuario => {
+                // console.log(usuario);
                 if (usuario.usuario === revision.usuario) {
                   const index = this.usuarios.indexOf(usuario);
                   this.usuarios.splice(index, 1);
+
+                  if (this._autenticacionService.usuario.usuario === usuario.usuario) {
+                    // console.log(this.usuarios);
+                    this.botonesRevision = false;
+                    this.revisado = revision.revisado;
+                  }
                 }
               });
             });
-            console.log(this.usuarios);
+            // console.log(this.usuarios);
           }
         );
   }
@@ -276,6 +342,56 @@ export class ArchivoViewComponent implements OnInit {
         .subscribe(
           success => {
             if (success) { this.getRevisiones(); }
+          }
+        );
+  }
+  delRevision(revisionid: string) {
+    const eliminar = false;
+    const _this: ArchivoViewComponent = this;
+    swal({
+        title: '¿Confirma que desea eliminar el registro?',
+        text: '¡Esta acción no podrá deshacerse una vez que usted haya confirmado su decisión!',
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#18A689',
+        confirmButtonText: '¡Por supuesto!',
+        cancelButtonText: 'Cancelar',
+        closeOnConfirm: false,
+        closeOnCancel: true },
+    function (isConfirm) {
+        /*Si el usuario ha confirmado la eliminacion */
+        if (isConfirm) {
+          /*********************************************************** */
+          if (revisionid !== '') {
+            _this._revisionService.del(revisionid)
+                .subscribe(
+                  success => {
+                    // alert('');
+                    if (success === true) {
+                      _this.getRevisiones();
+                      // _this.refreshUsuarios();
+                      swal('¡Registro eliminado!', 'El registro ha sido eliminado de la base de datos satisfactoriamente.', 'success');
+                    }
+                  }
+                );
+          }
+          /*********************************************************** */
+        }
+    }, _this);
+  }
+  revisar(archivoid: string) {
+    this._revisionService.revisar(archivoid, true)
+        .subscribe(
+          success => {
+              this.getRevisiones();
+          }
+        );
+  }
+  desrevisar(archivoid: string) {
+    this._revisionService.revisar(archivoid, false)
+        .subscribe(
+          success => {
+              this.getRevisiones();
           }
         );
   }

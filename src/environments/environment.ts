@@ -8,12 +8,12 @@ export const environment = {
 };
 
 export const app = {
-  name:"Dosimatic Web"
-  ,namesmall:"D+"
-  ,company:"Dosis Unitarias de Colombia"
-  ,yearlicense:"2017"
-  ,currentuser:"user"
-  // ,apiurl:"http://localhost:8082/Angular/unidosis/apidosimatic/"
-  ,apiurl:"http://dosisunitarias.com/gestion_documental/apidosimatic/"
-  ,chatComponent:false
+  name: 'Dosimatic Web',
+  namesmall: 'D+',
+  company: 'Dosis Unitarias de Colombia',
+  yearlicense: '2017',
+  currentuser: 'user',
+  // ,apiurl: 'http://localhost:8082/Angular/unidosis/apidosimatic/',
+  apiurl: 'http://dosisunitarias.com/gestion_documental/apidosimatic/',
+  chatComponent: false
 };

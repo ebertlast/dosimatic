@@ -70,7 +70,9 @@ export class ArchivosComponent implements OnInit {
         .subscribe(
           aprobaciones => {
             aprobaciones.forEach(aprobacion => {
-              if (!aprobacion.aprobado && usuario === aprobacion.usuario) {
+              // console.log(aprobacion);
+
+              if ((!aprobacion.aprobado || aprobacion.aprobado.toString() === '0' ) && usuario === aprobacion.usuario) {
                 // console.log(aprobacion);
                 this.aprobaciones.push(aprobacion);
               }else {
@@ -103,8 +105,8 @@ export class ArchivosComponent implements OnInit {
       const usuario = this._autenticacionService.usuario.usuario;
       this.modelList.forEach(archivo => {
         this.aprobaciones.forEach(aprobacion => {
-          if (aprobacion.archivoid === archivo.archivoid){
-            if (aprobacion.usuario === usuario && !aprobacion.aprobado){
+          if (aprobacion.archivoid === archivo.archivoid) {
+            if (aprobacion.usuario === usuario && (!aprobacion.aprobado || aprobacion.aprobado.toString() === '0')) {
               archivosPendientes.push(archivo);
             }
           }
