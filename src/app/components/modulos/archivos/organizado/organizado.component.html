@@ -1,0 +1,227 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Gesti&oacute;n de Documentos</h5>
+                <div class="ibox-tools">
+                    <a (click)="maestro()" style="color: gray;">Listado Maestro de Documentos</a>
+                </div>
+                <div class="ibox-tools oculto">
+                    <a class="collapse-link">
+                        <i class="fa fa-chevron-up"></i>
+                    </a>
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-wrench"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li><a href="#">Config option 1</a>
+                        </li>
+                        <li><a href="#">Config option 2</a>
+                        </li>
+                    </ul>
+                    <a class="close-link">
+                        <i class="fa fa-times"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="ibox-content" style="display: block;">
+                <div class="panel-body">
+                    <div class="panel-group" id="accordion">
+                        <div class="panel panel-default" *ngFor="let gestion of gestiones; let i = index ">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#{{gestion.gestionid}}" class="collapsed" aria-expanded="false">{{gestion.gestionid}} - {{gestion.denominacion}}</a>
+                                </h4>
+                            </div>
+                            <div id="{{gestion.gestionid}}" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                                <div class="panel-body">
+                                    <!-- --------------------------------------- -->
+
+
+
+
+                                    <ul class="nav nav-tabs">
+                                        <li class="active">
+                                            <a data-toggle="tab" href="#tab-{{i}}1" aria-expanded="true">
+                                                <!-- <i class="fa fa-list-ul"></i>  -->
+                                                Manuales
+                                            </a>
+                                        </li>
+                                        <li class="">
+                                            <a data-toggle="tab" href="#tab-{{i}}2" aria-expanded="false">
+                                                <!-- <i class="fa fa-list-ul"></i>  -->
+                                                Procedimientos
+                                            </a>
+                                        </li>
+                                        <li class="">
+                                            <a data-toggle="tab" href="#tab-{{i}}3" aria-expanded="false">
+                                                <!-- <i class="fa fa-list-ul"></i>  -->
+                                                Instructivos
+                                            </a>
+                                        </li>
+                                        <li class="">
+                                            <a data-toggle="tab" href="#tab-{{i}}4" aria-expanded="false">
+                                                <!-- <i class="fa fa-list-ul"></i>  -->
+                                                Formatos
+                                            </a>
+                                        </li>
+                                        <li class="">
+                                            <a data-toggle="tab" href="#tab-{{i}}5" aria-expanded="false">
+                                                <!-- <i class="fa fa-list-ul"></i>  -->
+                                                Externos
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content">
+                                        <!-- Manuales -->
+                                        <div id="tab-{{i}}1" class="tab-pane active">
+                                            <table class="table table-hover">
+                                            <thead class="oculto">
+                                                    <tr>
+                                                        <th>Fecha</th>
+                                                        <th>Identificador</th>
+                                                        <th>Archivo</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let a of archivos | applyFilter:'gestionid':gestion.gestionid | applyFilter: 'convencionid':'M'; let ai = index">
+                                                        <td>
+                                                            {{a.fecha|fechacorta}}
+                                                        </td>
+                                                        <td>
+                                                            <a (click)="download(a.archivoid)"> {{a.archivoid}}</a>
+                                                        </td>
+                                                        <td>
+                                                            <a (click)="download(a.archivoid)">{{a.denominacion}}
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <!-- Procedimientos -->
+                                        <div id="tab-{{i}}2" class="tab-pane">
+                                            <table class="table table-hover">
+                                                <thead class="oculto">
+                                                    <tr>
+                                                        <th>Fecha</th>
+                                                        <th>Identificador</th>
+                                                        <th>Archivo</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let a of archivos | applyFilter:'gestionid':gestion.gestionid | applyFilter: 'convencionid':'P'; let ai = index">
+                                                        <td>
+                                                            {{a.fecha|fechacorta}}
+                                                        </td>
+                                                        <td>
+                                                            <a (click)="download(a.archivoid)"> {{a.archivoid}}</a>
+                                                        </td>
+                                                        <td>
+                                                            <a (click)="download(a.archivoid)">{{a.denominacion}}
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <!-- Instructivos -->
+                                        <div id="tab-{{i}}3" class="tab-pane">
+                                            <table class="table table-hover">
+                                                <thead class="oculto">
+                                                    <tr>
+                                                        <th>Fecha</th>
+                                                        <th>Identificador</th>
+                                                        <th>Archivo</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let a of archivos | applyFilter:'gestionid':gestion.gestionid | applyFilter: 'convencionid':'I'; let ai = index">
+                                                        <td>
+                                                            {{a.fecha|fechacorta}}
+                                                        </td>
+                                                        <td>
+                                                            <a (click)="download(a.archivoid)"> {{a.archivoid}}</a>
+                                                        </td>
+                                                        <td>
+                                                            <a (click)="download(a.archivoid)">{{a.denominacion}}
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <!-- Formatos -->
+                                        <div id="tab-{{i}}4" class="tab-pane">
+                                            <table class="table table-hover">
+                                                <thead class="oculto">
+                                                    <tr>
+                                                        <th>Fecha</th>
+                                                        <th>Identificador</th>
+                                                        <th>Archivo</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let a of archivos | applyFilter:'gestionid':gestion.gestionid | applyFilter: 'convencionid':'F'; let ai = index">
+                                                        <td>
+                                                            {{a.fecha|fechacorta}}
+                                                        </td>
+                                                        <td>
+                                                            <a (click)="download(a.archivoid)"> {{a.archivoid}}</a>
+                                                        </td>
+                                                        <td>
+                                                            <a (click)="download(a.archivoid)">{{a.denominacion}}
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                        <!-- Material de Consulta -->
+                                        <div id="tab-{{i}}5" class="tab-pane">
+                                            <table class="table table-hover">
+                                                <thead class="oculto">
+                                                    <tr>
+                                                        <th>Fecha</th>
+                                                        <th>Identificador</th>
+                                                        <th>Archivo</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let a of archivos | applyFilter:'gestionid':gestion.gestionid | applyFilter: 'convencionid':'C'; let ai = index">
+                                                        <td>
+                                                            {{a.fecha|fechacorta}}
+                                                        </td>
+                                                        <td>
+                                                            <a (click)="download(a.archivoid)"> {{a.archivoid}}</a>
+                                                        </td>
+                                                        <td>
+                                                            <a (click)="download(a.archivoid)">{{a.denominacion}}
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+
+
+
+
+
+
+
+
+                                    <!-- --------------------------------------- -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+

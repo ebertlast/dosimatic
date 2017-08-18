@@ -223,21 +223,21 @@ export class UsuarioEditComponent implements OnInit {
     }
     /**fecha de nacimiento */
     if(!this.formOK)return;
-    let fechanacimiento:string=this._helper.getFecha("fechanacimiento");
-    if(fechanacimiento===""){
-      this.valids['fechanacimiento']={error:"La fecha de nacimiento es obligatoria"}
-      this.formOK=false;
-    }else{
-      if(!this._helper.fechavalida(fechanacimiento)){
-        this.valids['fechanacimiento']={error:"Debes ingresar una fecha válida en formato dd/mm/aaaa"}
-        this.formOK=false;
-      }else{
+    // let fechanacimiento:string=this._helper.getFecha("fechanacimiento");
+    // if(fechanacimiento===""){
+    //   this.valids['fechanacimiento']={error:"La fecha de nacimiento es obligatoria"}
+    //   this.formOK=false;
+    // }else{
+    //   if(!this._helper.fechavalida(fechanacimiento)){
+    //     this.valids['fechanacimiento']={error:"Debes ingresar una fecha válida en formato dd/mm/aaaa"}
+    //     this.formOK=false;
+    //   }else{
 
         
-      }
-      // console.log(fechanacimiento);
-      // console.log(this.model.fechanacimiento);
-    }
+    //   }
+    //   // console.log(fechanacimiento);
+    //   // console.log(this.model.fechanacimiento);
+    // }
     // this.formOK=false;
     // console.log(this.formOK);
   }

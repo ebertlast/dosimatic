@@ -16,13 +16,15 @@ import { ArchivoAddComponent } from './components/modulos/archivos/archivo-add/a
 import { ArchivoViewComponent } from './components/modulos/archivos/archivo-view/archivo-view.component';
 import { GestionComponent } from './components/modulos/archivos/gestion/gestion.component';
 import { ConvencionComponent } from './components/modulos/archivos/convencion/convencion.component';
+import { OrganizadoComponent } from './components/modulos/archivos/organizado/organizado.component';
 
 import { AuthGuard } from './guards/authguard';
 const appRoutes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
     { path: 'ingresar', component: IngresarComponent },
     { path: 'salir', component: IngresarComponent },
-    { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
+    // { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
+    { path: 'home', component: OrganizadoComponent, canActivate: [AuthGuard] },
     { path: 'enconstruccion', component: EnConstruccionComponent },
     { path: 'perfiles', component: PerfilesComponent, canActivate: [AuthGuard] },
     { path: 'perfiledit/:perfilid', component: PerfilEditComponent, canActivate: [AuthGuard] },

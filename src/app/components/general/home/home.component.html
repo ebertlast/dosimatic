@@ -2,13 +2,22 @@
   <div class="col-lg-12">
       <div class="ibox float-e-margins">
           <div class="ibox-content">
-              <h2 [ngClass]="{'oculto':filtro.length<=0}">
-                  {{pagedItems.length}} Resultados encontrados para: <span class="text-navy">“{{filtro}}”</span>
+              <h2 [ngClass]="{'oculto':filtro.length<=0&&convencion.length<=0}">
+                  {{allItems.length}} {{textoConvencion}} encontrados para: <span class="text-navy">“{{filtro}}”</span>
               </h2>
-              <small>Tiempo de respuesta  ({{intervalo/60}} segundos)</small>
+              <small>Tiempo de respuesta  ({{0*intervalo/60}} segundos)</small>
 
               <div class="search-form">
                   <form >
+                      <div class="form-group">
+                            <!-- <label class="col-sm-2 control-label">Select</label> -->
+                            <div class="col-sm-12">
+                                <select class="form-control m-b" name="convencion" [(ngModel)]="convencion" (change)="consultarArchivos()">
+                                    <option value="" selected>Todos</option>
+                                    <option *ngFor="let c of convenciones" value="{{c.convencionid}}">{{c.denominacion | capitalize}}</option>
+                                </select>
+                            </div>
+                        </div>
                       <div class="input-group">
                           <input type="text" [(ngModel)]="filtroAux" placeholder="Consulta aquí" name="filtroAux" class="form-control input-lg">
                           <div class="input-group-btn">
@@ -23,9 +32,9 @@
               <!--<div class="hr-line-dashed"></div>-->
               <div class="search-result" *ngFor="let a of pagedItems">
                 <h3><a [routerLink]="['/archivoview', a.archivoid]">{{a.archivoid}}</a></h3>
-                <a [routerLink]="['/archivoview', a.archivoid]" class="search-link">{{a.nombre}}</a>
+                <a [routerLink]="['/archivoview', a.archivoid]" class="search-link">{{a.denominacion}}</a>
                 <p>
-                    {{a.denominacion}}
+                    {{a.convencion}} DE {{a.gestion}}
                 </p>
                 <div class="hr-line-dashed"></div>
               </div>

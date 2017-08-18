@@ -55,6 +55,8 @@ import { FechacortaPipe } from './pipes/fechacorta.pipe';
 import { DocboxContentComponent } from './components/modulos/archivos/docbox-content/docbox-content.component';
 import { ArchivoViewComponent } from './components/modulos/archivos/archivo-view/archivo-view.component';
 import { UsuarioViewComponent } from './components/sistema/usuarios/usuario-view/usuario-view.component';
+import { OrganizadoComponent } from './components/modulos/archivos/organizado/organizado.component';
+import { FilterByPipe } from './pipes/filter-by.pipe';
 
 
 
@@ -89,7 +91,9 @@ import { UsuarioViewComponent } from './components/sistema/usuarios/usuario-view
     FechacortaPipe,
     DocboxContentComponent,
     ArchivoViewComponent,
-    UsuarioViewComponent
+    UsuarioViewComponent,
+    OrganizadoComponent,
+    FilterByPipe
   ],
   imports: [
     BrowserModule,

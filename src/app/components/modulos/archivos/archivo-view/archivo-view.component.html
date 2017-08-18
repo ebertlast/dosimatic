@@ -1,191 +1,261 @@
-<div class="row">
-    <div class="col-lg-3" [ngClass]="{'oculto' : me !== archivo.usuario}">
-        <div class="ibox float-e-margins">
-            <div class="ibox-content mailbox-content">
-                <div class="file-manager">
-                    <a class="btn btn-block btn-primary compose-mail oculto" href="mail_compose.html">Compose Mail</a>
-                    <div class="space-25"></div>
-                    <h5>Aprobaciones</h5>
-                    <table>
-                      <tr>
-                        <td>
-                          <select class="form-control m-b" name="aprobador" id="aprobador">
-                              <option *ngFor="let usuario of usuarios|applyFilter:'activo':'1'"  value="{{usuario.usuario}}">{{usuario.nombres}} {{usuario.apellidos}}</option>
-                          </select>
-                        </td>
-                        <td>
-                          <button class="btn btn-info btn-circle" (click)="addAprobador()" type="button"><i class="fa fa-check"></i></button>
-                        </td>
-                      </tr>
-                    </table>
-                    <ul class="folder-list m-b-md" style="padding: 0">
-                        <li *ngFor="let usuario of aprobaciones; let i=index">
-                          <a (click)="delAprobacion(usuario.aprobacionid)">{{i+1}}.- {{usuario.usuarionombre}}
-                            <span class="badge pull-right" [ngClass]="{'badge-danger':usuario.aprobado==0,'badge-primary':usuario.aprobado!=0}"> &nbsp; </span>
-                          </a>
-                        </li>
-                        <!--<li>1.- Ebert Zerpa <span class="badge badge-danger pull-right"> &nbsp; </span> </li>
-                        <li>2.- José Piñero <span class="badge badge-danger pull-right"> &nbsp; </span></li>
-                        <li>3.- Virinia Rojas <span class="badge badge-danger pull-right"> &nbsp; </span></li>
-                        <li>4.- Drafts <span class="badge badge-primary pull-right">&nbsp;</span></li>
-                        <li>5.- Trash</li>-->
-                    </ul>
-                    <br/>
-                    <br/>
-                    <h5>Revisión</h5>
-                    <table>
-                      <tr>
-                        <td>
-                          <select class="form-control m-b" name="revisor" id="revisor">
-                              <option *ngFor="let usuario of usuarios|applyFilter:'activo':'1'"  value="{{usuario.usuario}}">{{usuario.nombres}} {{usuario.apellidos}}</option>
-                          </select>
-                        </td>
-                        <td>
-                          <button class="btn btn-info btn-circle" (click)="addRevisor()" type="button"><i class="fa fa-check"></i></button>
-                        </td>
-                      </tr>
-                    </table>
-                    <ul class="folder-list m-b-md" style="padding: 0">
-                      <li *ngFor="let usuario of revisiones; let i=index">
-                        <a (click)="delRevision(usuario.revisionid)">{{i+1}}.- {{usuario.usuarionombre}}
-                          <span class="badge pull-right" [ngClass]="{'badge-danger':usuario.revisado==0,'badge-primary':usuario.revisado!=0}"> &nbsp; </span>
-                        </a>
-                      </li>
-                      <!--<li>1.- Ebert Zerpa <span class="badge badge-danger pull-right"> &nbsp; </span> </li>
-                      <li>2.- José Piñero <span class="badge badge-danger pull-right"> &nbsp; </span></li>
-                      <li>3.- Virinia Rojas <span class="badge badge-danger pull-right"> &nbsp; </span></li>
-                      <li>4.- Drafts <span class="badge badge-primary pull-right">&nbsp;</span></li>
-                      <li>5.- Trash</li>-->
-                    </ul>
-                    <div class="clearfix"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="animated fadeInRight" [ngClass]="{'col-lg-9' : me === archivo.usuario, 'col-lg-12' : me !== archivo.usuario}">
-      <div class="mail-box-header">
-          <div class="pull-right tooltip-demo">
-              <button [ngClass]="{'oculto':botonesAprobacion}" (click)="desaprobar(archivo.archivoid)" type="button" class="btn btn-outline btn-danger">Desaprobar</button>
-              <button [ngClass]="{'oculto':botonesAprobacion}" (click)="aprobar(archivo.archivoid)" type="button" class="btn btn-outline btn-primary">Aprobar</button>
-              <button [ngClass]="{'oculto':botonesRevision}" (click)="desrevisar(archivo.archivoid)" type="button" class="btn btn-outline btn-danger">Sin Revisar</button>
-              <button [ngClass]="{'oculto':botonesRevision}" (click)="revisar(archivo.archivoid)" type="button" class="btn btn-outline btn-primary">Revisado</button>
-              <!--<a href="#" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Print email"><i class="fa fa-print"></i> </a>-->
-              <!--<a href="mailbox.html" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Move to trash"><i class="fa fa-trash-o"></i> </a>-->
-          </div>
-          <h2>
-              {{archivo.archivoid}}
-          </h2>
-          <div class="mail-tools tooltip-demo m-t-md">
-              <h3>
-                  <span class="font-noraml">Nombre: </span>{{archivo.denominacion}}
-              </h3>
-              <h5>
-                  <span class="pull-right font-noraml">Subido: {{archivo.fecha|fecha}}</span>
-                  <span class="font-noraml">Responsable: </span>{{archivo.usuarionombre}}
-                  <br />
-                  <span class="pull-right font-noraml">Válido hasta: {{archivo.fechaexp|fecha}}</span>
+<div class="row" class="animated fadeInRight" >
 
-              </h5>
-          </div>
+  <div [ngClass]="{'col-lg-12' : me === archivo.usuario, 'col-lg-12' : me !== archivo.usuario}">
+    <div class="mail-box-header">
+      <div class="pull-right tooltip-demo">
+        <button [ngClass]="{'oculto':botonesAprobacion}" (click)="desaprobar(archivo.archivoid)" type="button" class="btn btn-outline btn-danger">Desaprobar</button>
+        <button [ngClass]="{'oculto':botonesAprobacion}" (click)="aprobar(archivo.archivoid)" type="button" class="btn btn-outline btn-primary">Aprobar</button>
+        <button [ngClass]="{'oculto':botonesRevision}" (click)="desrevisar(archivo.archivoid)" type="button" class="btn btn-outline btn-danger">Sin Revisar</button>
+        <button [ngClass]="{'oculto':botonesRevision}" (click)="revisar(archivo.archivoid)" type="button" class="btn btn-outline btn-primary">Revisado</button>
+        <!--<a href="#" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Print email"><i class="fa fa-print"></i> </a>-->
+        <!--<a href="mailbox.html" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Move to trash"><i class="fa fa-trash-o"></i> </a>-->
       </div>
-        <div class="mail-box">
-          <div class="mail-body" [ngClass]="{'oculto':archivo.observaciones.length<=1}">
-            <p>
-              {{archivo.observaciones}}
-            </p>
-          </div>
+      <h2>
+        {{archivo.denominacion|capitalize}}
+      </h2>
+      <div class="mail-tools tooltip-demo m-t-md">
+        <h3>
+        <span class="font-noraml">Identificador: </span> {{archivo.archivoid}}
+        <span class="font-noraml">&nbsp;&nbsp;&nbsp; Versión: </span> {{archivo.version}}
+        </h3> 
+        <h5>
+          <span class="pull-right font-noraml">Subido: {{archivo.fecha|fecha}}</span>
+          <span class="font-noraml">Responsable: </span>{{archivo.usuarionombre}}
+          <br />
+          <span class="pull-right font-noraml">Válido hasta: {{archivo.fechaexp|fecha}}</span>
+        </h5>
+      </div>
+    </div>
+    <div class="mail-box">
+      <div class="mail-body" [ngClass]="{'oculto':archivo.observaciones.length<=1}">
+        <p>
+          {{archivo.observaciones}}
+        </p>
+      </div>
 
-          <div class="mail-attachment">
-            <p>
-                <span><i class="fa fa-paperclip"></i> 1 Archivo - </span>
-                <!--<a href="{{app.apiurl}}uploads/{{archivo.nombre}}">Descargar</a>-->
-                <a (click)="download(archivo.archivoid)" [ngClass]="{'oculto':excel}">Descargar</a>
-            </p>
+      <div class="mail-attachment">
+        <p>
+          <span><i class="fa fa-paperclip"></i> {{cantidadArchivos}} Archivo{{(cantidadArchivos<2)?'':'s'}} </span>
+          
+          <!--<a href="{{app.apiurl}}uploads/{{archivo.nombre}}">Descargar</a>-->
+          <!-- <a (click)="download(archivo.archivoid)" [ngClass]="{'oculto':archivoFuente}">Descargar</a> -->
+        </p>
 
-            <div class="attachment">
-                <div class="file-box">
-                    <div class="file">
-                        <a href="{{app.apiurl}}uploads/{{archivo.nombre}}" [ngClass]="{'oculto':!excel}">
-                            <span class="corner"></span>
-                            <div class="icon">
-                                <i class="fa fa-file"></i>
-                            </div>
-                            <div class="file-name">
-                                {{archivo.nombre}}
-                                <br>
-                                <small>Agregado: {{archivo.fecha|fechacorta}}</small>
-                            </div>
-                        </a>
-                        <div [ngClass]="{'oculto':excel}">
-                              <span class="corner"></span>
-                            <div class="icon">
-                                <i class="fa fa-file"></i>
-                            </div>
-                            <div class="file-name">
-                                {{archivo.nombre}}
-                                <br>
-                                <small>Agregado: {{archivo.fecha|fechacorta}}</small>
-                            </div>
-                        </div>
-                    </div>
+        <div class="attachment">
+          <div class="file-box">
+            <div class="file">
+              <a href="{{app.apiurl}}uploads/{{archivo.nombre}}" [ngClass]="{'oculto':!archivoFuente||true}">
+                <span class="corner"></span>
+                <div class="icon">
+                  <i class="fa fa-file"></i>
+                </div>
+                <div class="file-name">
+                  {{archivo.nombre}}
+
+                  <br>
+                  <small>Agregado: {{archivo.fecha|fechacorta}}</small>
+                </div>
+              </a>
+              <div [ngClass]="{'oculto':archivoFuente}">
+                <span class="corner"></span>
+                <div class="icon">
+                  <!-- <i class="fa fa-file"></i> -->
+                  <i class="fa fa-file-pdf-o"></i>
+                </div>
+                <div class="file-name">
+                  {{archivo.denominacion}}
+                  <br>
+                  <a (click)="download(archivo.archivoid)" [ngClass]="{'oculto':archivoFuente}">Descargar</a>
+                  <br>
+                  <small>Agregado: {{archivo.fecha|fechacorta}}</small>
+
+                  <br>
+                  <div [ngClass]="{'oculto':archivo.usuario !== me}">
+
+                    <label for="file-upload2" class="custom-file-upload" *ngIf="!uploading" >
+                      <i class="fa fa-cloud-upload" ></i> Actualizar Versi&oacute;n
+                      <!-- <button class="btn btn-outline btn-success  dim" type="button"><i class="fa fa-upload"></i></button> -->
+                    </label>
+
+                    <input id="file-upload2" type="file" (change)="fileChangeEvent($event,false)" accept="application/pdf"  />
+                    <img *ngIf="uploading" src="./assets/images/preloader20x20.GIF" alt="cargando..." height="20" width="20">
+
+                  </div>
 
                 </div>
-                <div class="file-box oculto">
-                      <div class="file">
-                              <span class="corner"></span>
+              </div>
+            </div>
 
-                              <div class="image">
-                                  <p *ngFor="let item of archivos"><a [routerLink]="['/archivoview', item.archivoid]" >{{item.archivoid}}</a></p>
-                              </div>
-                              <div class="file-name">
-                                  Archivos vinculados
-                              </div>
+          </div>
 
-                      </div>
+
+
+          <div class="attachment" [ngClass]="{'oculto' : archivo.usuario !== me}">
+            <div class="file-box">
+              <div class="file">
+                <a href="{{app.apiurl}}uploads/{{archivo.nombre}}" [ngClass]="{'oculto':!archivoFuente}">
+                  <span class="corner"></span>
+                  <div class="icon">
+                    <i class="fa fa-file"></i>
                   </div>
-                <div class="clearfix"></div>
+                  <div class="file-name">
+                    {{archivo.nombre}}
+
+                    <br>
+                    <small>Agregado: {{archivo.fecha|fechacorta}}</small>
+                  </div>
+                </a>
+                <div [ngClass]="{'oculto':archivoFuente}">
+                  <span class="corner"></span>
+                  <div class="icon">
+                   <i class="fa fa-file" *ngIf="archivoEditable.nombre.split('.')[archivoEditable.nombre.split('.').length-1].substring(0,3)!=='doc' && archivoEditable.nombre.split('.')[archivoEditable.nombre.split('.').length-1].substring(0,3)!=='xls'"></i>
+                   <i class="fa fa-file-word-o" *ngIf="archivoEditable.nombre.split('.')[archivoEditable.nombre.split('.').length-1].substring(0,3)==='doc'"></i>
+                   <i class="fa fa-file-excel-o" *ngIf="archivoEditable.nombre.split('.')[archivoEditable.nombre.split('.').length-1].substring(0,3)==='xls'"></i>
+                 </div>
+                 <div class="file-name">
+                  Archivo fuente
+                  <a (click)="download(archivoEditable.archivoid)" [ngClass]="{'oculto':archivoEditable.nombre===''}">Descargar</a>
+                  <br>
+                  Editado el {{archivoEditable.fecha|fecha}}
+                  <br>
+                  <label for="file-upload" class="custom-file-upload" *ngIf="!uploading">
+                    <i class="fa fa-cloud-upload" ></i> Actualizar Archivo Fuente
+                    <!-- <button class="btn btn-outline btn-success  dim" type="button"><i class="fa fa-upload"></i></button> -->
+                  </label>
+
+
+                  <input id="file-upload" type="file" (change)="fileChangeEvent($event)" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel,application/msword" />
+                  <img *ngIf="uploading" src="./assets/images/preloader20x20.GIF" alt="cargando..." height="20" width="20">
+
+
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+
+          <div class="file-box oculto">
+            <div class="file">
+              <span class="corner"></span>
+              <div class="icon">
+                <i class="fa fa-file" *ngIf="archivoEditable.nombre.split('.')[archivoEditable.nombre.split('.').length-1].substring(0,3)!=='doc' && archivoEditable.nombre.split('.')[archivoEditable.nombre.split('.').length-1].substring(0,3)!=='xls'"></i>
+                <i class="fa fa-file-word-o" *ngIf="archivoEditable.nombre.split('.')[archivoEditable.nombre.split('.').length-1].substring(0,3)==='doc'"></i>
+                <i class="fa fa-file-excel-o" *ngIf="archivoEditable.nombre.split('.')[archivoEditable.nombre.split('.').length-1].substring(0,3)==='xls'"></i>
+              </div>
+              <div class="file-name">
+                Archivo fuente
+                <a (click)="download(archivoEditable.archivoid)" [ngClass]="{'oculto':archivoEditable.nombre===''}">Descargar</a>
+                <br>
+                Editado el {{archivoEditable.fecha|fechacorta}}
+              </div>
+              <br>
+              <label for="file-upload" class="custom-file-upload" *ngIf="!uploading">
+                <i class="fa fa-cloud-upload" ></i> Actualizar Archivo Fuente
+                <!-- <button class="btn btn-outline btn-success  dim" type="button"><i class="fa fa-upload"></i></button> -->
+              </label>
+
+
+              <input id="file-upload" type="file" (change)="fileChangeEvent($event)" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel,application/msword" />
+              <img *ngIf="uploading" src="./assets/images/preloader20x20.GIF" alt="cargando..." height="20" width="20">
             </div>
           </div>
 
 
-          <div class="mail-body tooltip-demo">
-            <p>
-            Actualizar Fecha de Vigencia:
-            </p>
-            <p>
-            <input class="form-control" type="text" id="fechaexp" name="fechaexp" placeholder="Ingrese una fecha">
-
-            </p>
-            <!--<div class="col-md-3">-->
-                      <!--<div class="form-group " id="fechaexp">
-                          <label class="font-noraml">Fecha de Vigencia</label>
-                          <div class="input-group date">
-                              <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                              <input class="form-control input-sm" type="text" required name="fechaexp">
-                          </div>
-
-                      </div>-->
-                    <!--</div>-->
-          </div>
-
-          <div class="mail-body tooltip-demo">
-            <p>
-            Archivos vinculados:
-            </p>
-            <p *ngFor="let a of archivos">
-              {{a.archivoid}}.- {{a.denominacion}}
-
-              <!--<a [routerLink]="['/archivoview', a.archivoid]" class="search-link">{{a.archivoid}}</a>-->
-            </p>
-          </div>
-
-          <div class="mail-body text-right tooltip-demo">
-                  <!--<a class="btn btn-sm btn-white" href="mail_compose.html"><i class="fa fa-reply"></i> Reply</a>-->
-                  <!--<a class="btn btn-sm btn-white" href="mail_compose.html"><i class="fa fa-arrow-right"></i> Forward</a>-->
-                  <!--<button title="" data-placement="top" data-toggle="tooltip" type="button" data-original-title="Print" class="btn btn-sm btn-white"><i class="fa fa-print"></i> Print</button>-->
-                  <button (click)="delDocumento(archivo.archivoid)" title="" data-placement="top" data-toggle="tooltip" data-original-title="Trash" class="btn btn-sm btn-white"><i class="fa fa-trash-o"></i> Eliminar Documento</button>
-          </div>
           <div class="clearfix"></div>
         </div>
+      </div>
+      
+      <div class="mail-body tooltip-demo" [ngClass]="{'oculto' : me !== archivo.usuario}">
+        <div class="ibox float-e-margins">
+          <div class="ibox-content mailbox-content">
+            <div class="file-manager">
+              <a class="btn btn-block btn-primary compose-mail oculto" href="mail_compose.html">Compose Mail</a>
+              <div class="space-25"></div>
+              <h5>Aprobaciones</h5>
+              <table>
+                <tr>
+                  <td>
+                    <select class="form-control m-b" name="aprobador" id="aprobador">
+                      <option *ngFor="let usuario of usuarios|applyFilter:'activo':'1'"  value="{{usuario.usuario}}">{{usuario.nombres}} {{usuario.apellidos}}</option>
+                    </select>
+                  </td>
+                  <td>
+                    <button class="btn btn-info btn-circle" (click)="addAprobador()" type="button"><i class="fa fa-check"></i></button>
+                  </td>
+                </tr>
+              </table>
+              <ul class="folder-list m-b-md" style="padding: 0">
+                <li *ngFor="let usuario of aprobaciones; let i=index">
+                  <a (click)="delAprobacion(usuario.aprobacionid)">{{i+1}}.- {{usuario.usuarionombre}}
+                    <span class="badge pull-right" [ngClass]="{'badge-danger':usuario.aprobado==0,'badge-primary':usuario.aprobado!=0}"> &nbsp; </span>
+                  </a>
+                </li>
+
+              </ul>
+              <br/>
+              <br/>
+              <h5>Revisiones</h5>
+              <table>
+                <tr>
+                  <td>
+                    <select class="form-control m-b" name="revisor" id="revisor">
+                      <option *ngFor="let usuario of usuarios|applyFilter:'activo':'1'"  value="{{usuario.usuario}}">{{usuario.nombres}} {{usuario.apellidos}}</option>
+                    </select>
+                  </td>
+                  <td>
+                    <button class="btn btn-info btn-circle" (click)="addRevisor()" type="button"><i class="fa fa-check"></i></button>
+                  </td>
+                </tr>
+              </table>
+              <ul class="folder-list m-b-md" style="padding: 0">
+                <li *ngFor="let usuario of revisiones; let i=index">
+                  <a (click)="delRevision(usuario.revisionid)">{{i+1}}.- {{usuario.usuarionombre}}
+                    <span class="badge pull-right" [ngClass]="{'badge-danger':usuario.revisado==0,'badge-primary':usuario.revisado!=0}"> &nbsp; </span>
+                  </a>
+                </li>
+              </ul>
+              <div class="clearfix"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="mail-body tooltip-demo" *ngIf="me === archivo.usuario">
+        <p>
+          Actualizar Fecha de Vigencia:
+          <input class="form-control" type="text" id="fechaexp" name="fechaexp" placeholder="Ingrese una fecha">
+        </p>
+        <!--<div class="col-md-3">-->
+      <!--<div class="form-group " id="fechaexp">
+          <label class="font-noraml">Fecha de Vigencia</label>
+          <div class="input-group date">
+              <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+              <input class="form-control input-sm" type="text" required name="fechaexp">
+          </div>
+
+        </div>-->
+        <!--</div>-->
+      </div>
+
+      <div class="mail-body tooltip-demo" *ngIf="archivos.length>0">
+        <p>
+          Archivos vinculados:
+        </p>
+        <p *ngFor="let a of archivos">
+          {{a.archivoid}}.- {{a.denominacion|capitalize}}
+
+          <!--<a [routerLink]="['/archivoview', a.archivoid]" class="search-link">{{a.archivoid}}</a>-->
+        </p>
+      </div>
+
+      <div class="mail-body text-right tooltip-demo">
+        <!--<a class="btn btn-sm btn-white" href="mail_compose.html"><i class="fa fa-reply"></i> Reply</a>-->
+        <!--<a class="btn btn-sm btn-white" href="mail_compose.html"><i class="fa fa-arrow-right"></i> Forward</a>-->
+        <!--<button title="" data-placement="top" data-toggle="tooltip" type="button" data-original-title="Print" class="btn btn-sm btn-white"><i class="fa fa-print"></i> Print</button>-->
+        <button (click)="delDocumento(archivo.archivoid)" title="" data-placement="top" data-toggle="tooltip" data-original-title="Trash" class="btn btn-sm btn-white" *ngIf="enableDelete"><i class="fa fa-trash-o"></i> Eliminar Documento</button>
+      </div>
+      <div class="clearfix"></div>
     </div>
+  </div>
 </div>

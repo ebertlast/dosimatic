@@ -109,7 +109,7 @@ export class ArchivoAddComponent implements OnInit {
         }
       });
       let id = '000' + i.toString();
-      this.model.archivoid = this.model.convencionid + this.model.gestionid + id.substr(id.length - 3);
+      this.model.archivoid = this.model.convencionid + this.model.gestionid + id.substr(id.length - 2);
 
       if (this.model.archivoidaux !== '') {
         this.model.archivoid = this.model.archivoidaux;
@@ -135,7 +135,7 @@ export class ArchivoAddComponent implements OnInit {
           if (this.model.archivoidaux === x.archivoidaux){ i++; }
         });
         id = '000' + i.toString();
-        this.model.archivoid += '-' + id.substr(id.length - 3);
+        this.model.archivoid += '-' + id.substr(id.length - 2);
       }
 
     }

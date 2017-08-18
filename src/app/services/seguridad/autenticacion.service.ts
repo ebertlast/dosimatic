@@ -112,7 +112,7 @@ export class AutenticacionService {
         // console.log(params);
         return this._http.post(app.apiurl + '/seguridad.php/autenticar', params, {headers: headers})
             .map((response: Response) => {
-              console.log(response.json());
+              // console.log(response.json());
               const body = response.json();
               if (body.error) {
                 this._helper.notificationToast(body.error,'Inicio de Sesiones', 'error');
